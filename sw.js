@@ -1,18 +1,18 @@
 // ── Habit Tracker Service Worker ─────────────────────────────────────────────
-// Strategy: Cache-first for assets, network-first for the HTML page.
-// On update: new SW activates immediately and refreshes stale cache.
+// Strategy: network-first for the app shell (HTML/CSS/JS) so updates always show
+// when online, cache-first for static assets (icons, fonts).
+// Bump CACHE_NAME whenever you want old caches wiped.
 
-const CACHE_NAME = 'habit-tracker-v1';
-const RUNTIME_CACHE = 'habit-tracker-runtime-v1';
+const CACHE_NAME = 'habit-tracker-v3';
+const RUNTIME_CACHE = 'habit-tracker-runtime-v3';
 
-// Files to pre-cache on install
 const PRECACHE_URLS = [
   './index.html',
+  './style.css',
+  './script.js',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
-  // Google Fonts — cache the Inter font so it works offline
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
 ];
 
 // ── INSTALL ───────────────────────────────────────────────────────────────────
@@ -20,21 +20,20 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(PRECACHE_URLS))
-      .then(() => self.skipWaiting())   // activate immediately
+      .then(() => self.skipWaiting())
   );
 });
 
 // ── ACTIVATE ──────────────────────────────────────────────────────────────────
 self.addEventListener('activate', event => {
-  // Delete old caches from previous versions
   event.waitUntil(
-    caches.keys().then(cacheNames =>
+    caches.keys().then(names =>
       Promise.all(
-        cacheNames
-          .filter(name => name !== CACHE_NAME && name !== RUNTIME_CACHE)
-          .map(name => caches.delete(name))
+        names
+          .filter(n => n !== CACHE_NAME && n !== RUNTIME_CACHE)
+          .map(n => caches.delete(n))
       )
-    ).then(() => self.clients.claim())  // take control of all open tabs
+    ).then(() => self.clients.claim())
   );
 });
 
@@ -43,36 +42,38 @@ self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Don't intercept non-GET or chrome-extension requests
   if (request.method !== 'GET') return;
-  if (url.protocol === 'chrome-extension:') return;
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
+  // Leaderboard / API calls must always hit the network — only cache our own files and Google Fonts
+  if (url.origin !== self.location.origin && !/(^|\.)fonts\.(googleapis|gstatic)\.com$/.test(url.hostname)) return;
 
-  // Strategy A: Network-first for the main HTML page
-  // (ensures the app always loads the latest version when online)
-  if (url.pathname.endsWith('index.html') || url.pathname === '/') {
-    event.respondWith(networkFirst(request));
-    return;
-  }
+  const isShell =
+    url.origin === self.location.origin &&
+    (request.mode === 'navigate' ||
+      /\/(index\.html|style\.css|script\.js)$/.test(url.pathname) ||
+      url.pathname.endsWith('/'));
 
-  // Strategy B: Cache-first for everything else (fonts, icons, manifest)
-  event.respondWith(cacheFirst(request));
+  event.respondWith(isShell ? networkFirst(request) : cacheFirst(request));
 });
 
 // ── STRATEGIES ────────────────────────────────────────────────────────────────
 async function networkFirst(request) {
   try {
     const response = await fetch(request);
-    // Clone and store fresh copy in cache
-    const cache = await caches.open(CACHE_NAME);
-    cache.put(request, response.clone());
+    if (response && response.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, response.clone());
+    }
     return response;
   } catch {
-    // Offline — serve from cache
-    const cached = await caches.match(request);
+    const cached = await caches.match(request, { ignoreSearch: true });
     if (cached) return cached;
-    // Absolute fallback
-    return new Response('<h2>You are offline</h2><p>Open the app while connected once to enable offline mode.</p>',
-      { headers: { 'Content-Type': 'text/html' } });
+    if (request.mode === 'navigate') {
+      const shell = await caches.match('./index.html');
+      if (shell) return shell;
+    }
+    return new Response('You are offline. Open the app once while connected to enable offline mode.',
+      { status: 503, headers: { 'Content-Type': 'text/plain' } });
   }
 }
 
@@ -81,8 +82,10 @@ async function cacheFirst(request) {
   if (cached) return cached;
   try {
     const response = await fetch(request);
-    const cache = await caches.open(RUNTIME_CACHE);
-    cache.put(request, response.clone());
+    if (response && (response.ok || response.type === 'opaque')) {
+      const cache = await caches.open(RUNTIME_CACHE);
+      cache.put(request, response.clone());
+    }
     return response;
   } catch {
     return new Response('', { status: 408 });
@@ -97,7 +100,6 @@ self.addEventListener('message', event => {
 // ── BACKGROUND SYNC (future-ready) ────────────────────────────────────────────
 self.addEventListener('sync', event => {
   if (event.tag === 'sync-habits') {
-    // Placeholder for future cloud sync
     console.log('[SW] Background sync triggered');
   }
 });
