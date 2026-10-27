@@ -1,183 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Habit Tracker</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Habit Tracker</title>
 
-<!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
 
-<!-- Theme & status bar -->
-<meta name="theme-color" content="#1a1a24">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="application-name" content="Habit Tracker">
+  <!-- Theme & status bar -->
+  <meta name="theme-color" content="#1a1a24">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Habit Tracker">
 
-<!-- Apple PWA -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Habits">
-<link rel="apple-touch-icon" href="icon-192.png">
+  <!-- Apple PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Habits">
+  <link rel="apple-touch-icon" href="icon-192.png">
 
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="icon-192.png">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-192.png">
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Apply saved theme before first paint (no flash) -->
+  <script>
+    (function () {
+      try {
+        var pref = localStorage.getItem('ht3_theme') || 'system';
+        var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', pref === 'system' ? (dark ? 'dark' : 'light') : pref);
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
 </head>
+
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="header-left">
-    <h1>Habit Tracker</h1>
-    <div class="hdate" id="hDate"></div>
-  </div>
-  <button class="icon-btn" id="settingsBtn">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="3"/>
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-    </svg>
-  </button>
-</header>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <h1 id="hTitle">Habit Tracker</h1>
+      <div class="hdate" id="hDate"></div>
+    </div>
+    <button class="icon-btn" id="settingsBtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3" />
+        <path
+          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+      </svg>
+    </button>
+  </header>
 
-<!-- TODAY BANNER -->
-<div class="today-banner" id="todayBanner">
-  <div class="tb-left">
-    <div class="tb-label">Today's Progress</div>
-    <div class="tb-count" id="tbCount">0 <span>/ 0 habits</span></div>
-    <div class="tb-bar-wrap"><div class="tb-bar" id="tbBar" style="width:0%;background:#a855f7"></div></div>
-  </div>
-  <div class="tb-pct" id="tbPct">0%</div>
-</div>
+  <!-- ═══ HABITS VIEW ═══ -->
+  <main class="view active" id="view-habits">
 
-<!-- WEEK STRIP -->
-<div class="week-wrap">
-  <div class="week-lbl">This Week</div>
-  <div class="week-strip" id="weekStrip"></div>
-</div>
+    <!-- TODAY BANNER -->
+    <div class="today-banner" id="todayBanner">
+      <div class="tb-left">
+        <div class="tb-label">Today's Progress</div>
+        <div class="tb-count" id="tbCount">0 <span>/ 0 habits</span></div>
+        <div class="tb-bar-wrap">
+          <div class="tb-bar" id="tbBar" style="width:0%;background:#a855f7"></div>
+        </div>
+      </div>
+      <div class="tb-pct" id="tbPct">0%</div>
+    </div>
 
-<!-- ADD BUTTON -->
-<div class="add-wrap">
-  <button class="add-btn" id="addBtn">
-    <span class="add-plus">+</span> Add New Habit
-  </button>
-</div>
+    <!-- WEEK STRIP -->
+    <div class="week-wrap">
+      <div class="week-lbl">This Week</div>
+      <div class="week-strip" id="weekStrip"></div>
+    </div>
 
-<!-- HABITS LIST -->
-<div class="habits-wrap" id="habitsList"></div>
+    <!-- ADD BUTTON -->
+    <div class="add-wrap">
+      <button class="add-btn" id="addBtn">
+        <span class="add-plus">+</span> Add New Habit
+      </button>
+    </div>
 
-<!-- TOOLTIP -->
-<div class="cell-tip" id="cellTip"></div>
+    <!-- HABITS LIST -->
+    <div class="habits-wrap" id="habitsList"></div>
 
-<!-- ADD/EDIT MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h2 id="modalTitle">New Habit</h2>
-    <input type="text" class="modal-input" id="habitInput" placeholder="e.g. Morning Run, Read 30 min…" maxlength="40">
-    <div class="sec-lbl">Icon</div>
-    <div class="emoji-picker" id="emojiPicker"></div>
-    <div class="sec-lbl">Color</div>
-    <div class="color-picker" id="colorPicker"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" id="btnCancel">Cancel</button>
-      <button class="btn-save"   id="btnSave">Save Habit</button>
+  </main>
+
+  <!-- ═══ NEW VIEWS (rendered by script.js) ═══ -->
+  <section class="view" id="view-routine"></section>
+  <section class="view" id="view-attendance"></section>
+  <section class="view" id="view-planner"></section>
+  <section class="view" id="view-games"></section>
+
+  <!-- TOOLTIP -->
+  <div class="cell-tip" id="cellTip"></div>
+
+  <!-- ADD/EDIT MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <h2 id="modalTitle">New Habit</h2>
+      <input type="text" class="modal-input" id="habitInput" placeholder="e.g. Morning Run, Read 30 min…"
+        maxlength="40">
+      <div class="sec-lbl">Icon</div>
+      <div class="emoji-picker" id="emojiPicker"></div>
+      <div class="sec-lbl">Color</div>
+      <div class="color-picker" id="colorPicker"></div>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="btnCancel">Cancel</button>
+        <button class="btn-save" id="btnSave">Save Habit</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- CONFIRM DELETE -->
-<div class="confirm-overlay" id="confirmOverlay">
-  <div class="confirm-box">
-    <h3>Delete Habit?</h3>
-    <p>All tracking data will be permanently removed.</p>
-    <div class="confirm-btns">
-      <button class="btn-no"  id="confirmNo">Cancel</button>
-      <button class="btn-yes" id="confirmYes">Delete</button>
+  <!-- CONFIRM DELETE -->
+  <div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-box">
+      <h3>Delete Habit?</h3>
+      <p>All tracking data will be permanently removed.</p>
+      <div class="confirm-btns">
+        <button class="btn-no" id="confirmNo">Cancel</button>
+        <button class="btn-yes" id="confirmYes">Delete</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- SETTINGS -->
-<div class="settings-overlay" id="settingsOverlay"></div>
-<div class="settings-panel" id="settingsPanel">
-  <div class="settings-head">
-    <h2>Settings</h2>
-    <button class="settings-close" id="settingsClose">✕</button>
+  <!-- SETTINGS -->
+  <div class="settings-overlay" id="settingsOverlay"></div>
+  <div class="settings-panel" id="settingsPanel">
+    <div class="settings-head">
+      <h2>Settings</h2>
+      <button class="settings-close" id="settingsClose">✕</button>
+    </div>
+    <span class="s-section-title" style="margin-top:4px">Appearance</span>
+    <div class="seg">
+      <button class="seg-btn" data-theme="system">Auto</button>
+      <button class="seg-btn" data-theme="light">Light</button>
+      <button class="seg-btn" data-theme="dark">Dark</button>
+    </div>
+
+    <div class="s-item">
+      <div>
+        <div class="s-label">Reminders</div>
+        <div class="s-sub">Daily habit reminder</div>
+      </div>
+      <div class="toggle" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="s-item">
+      <div>
+        <div class="s-label">Show Streaks</div>
+        <div class="s-sub">Fire emoji for streaks</div>
+      </div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="s-item">
+      <div>
+        <div class="s-label">Start on Monday</div>
+        <div class="s-sub">Week view starts Monday</div>
+      </div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="s-item">
+      <div>
+        <div class="s-label">Weekend mode</div>
+        <div class="s-sub">Open Planner on weekends</div>
+      </div>
+      <div class="toggle" id="autoWkToggle"></div>
+    </div>
+    <!-- DATA SAFETY -->
+    <span class="s-section-title">Data Safety</span>
+
+    <button class="s-btn s-btn-export" id="exportBtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="7 10 12 15 17 10" />
+        <line x1="12" y1="15" x2="12" y2="3" />
+      </svg>
+      Export Backup (JSON)
+    </button>
+
+    <button class="s-btn s-btn-import" id="importBtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="17 8 12 3 7 8" />
+        <line x1="12" y1="3" x2="12" y2="15" />
+      </svg>
+      Import Backup (JSON)
+    </button>
+    <input type="file" id="importFile" accept=".json" style="display:none">
+
+    <button class="s-btn s-btn-danger" id="clearDataBtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6" />
+        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+        <path d="M10 11v6M14 11v6" />
+        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+      </svg>
+      Clear All Data
+    </button>
+
+    <div style="margin-top:16px;font-size:.62rem;color:var(--sub);line-height:1.6;text-align:center">
+      Export saves habits, routines, attendance &amp; game progress.<br>Import merges with existing data.
+    </div>
+
+    <div style="position:absolute;bottom:16px;left:18px;right:18px;text-align:center;font-size:.65rem;color:var(--sub)">
+      Habit Tracker · v5.0</div>
   </div>
-  <div class="s-item">
-    <div><div class="s-label">Reminders</div><div class="s-sub">Daily habit reminder</div></div>
-    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-  </div>
-  <div class="s-item">
-    <div><div class="s-label">Show Streaks</div><div class="s-sub">Fire emoji for streaks</div></div>
-    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-  </div>
-  <div class="s-item">
-    <div><div class="s-label">Start on Monday</div><div class="s-sub">Week view starts Monday</div></div>
-    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-  </div>
-  <!-- DATA SAFETY -->
-  <span class="s-section-title">Data Safety</span>
 
-  <button class="s-btn s-btn-export" id="exportBtn">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-      <polyline points="7 10 12 15 17 10"/>
-      <line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
-    Export Backup (JSON)
-  </button>
-
-  <button class="s-btn s-btn-import" id="importBtn">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-      <polyline points="17 8 12 3 7 8"/>
-      <line x1="12" y1="3" x2="12" y2="15"/>
-    </svg>
-    Import Backup (JSON)
-  </button>
-  <input type="file" id="importFile" accept=".json" style="display:none">
-
-  <button class="s-btn s-btn-danger" id="clearDataBtn">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="3 6 5 6 21 6"/>
-      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-      <path d="M10 11v6M14 11v6"/>
-      <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-    </svg>
-    Clear All Data
-  </button>
-
-  <div style="margin-top:16px;font-size:.62rem;color:var(--sub);line-height:1.6;text-align:center">
-    Export saves all habits &amp; logs.<br>Import merges with existing data.
+  <!-- TIME BLOCK SHEET (Routine + Weekend Planner) -->
+  <div class="modal-overlay" id="slotOverlay">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <h2 id="slotTitle">New Time Block</h2>
+      <input type="text" class="modal-input" id="slotName" placeholder="e.g. Data Structures lecture" maxlength="40">
+      <div class="time-row">
+        <label class="time-field"><span class="sec-lbl">Start</span><input type="time" class="modal-input"
+            id="slotStart"></label>
+        <label class="time-field"><span class="sec-lbl">End</span><input type="time" class="modal-input"
+            id="slotEnd"></label>
+      </div>
+      <div class="sec-lbl">Type</div>
+      <div class="type-picker" id="slotTypes"></div>
+      <div class="modal-err" id="slotErr" role="alert"></div>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="slotCancel">Cancel</button>
+        <button class="btn-save" id="slotSave">Save block</button>
+      </div>
+    </div>
   </div>
 
-  <div style="position:absolute;bottom:16px;left:18px;right:18px;text-align:center;font-size:.65rem;color:var(--sub)">Habit Tracker · v3.0</div>
-</div>
-
-<script src="script.js"></script>
-<div class="toast" id="toast"></div>
-
-<!-- PWA UPDATE BANNER -->
-<div class="update-banner" id="updateBanner">
-  <p><strong>Update available!</strong><br>A new version of Habit Tracker is ready.</p>
-  <div style="display:flex;gap:8px;align-items:center">
-    <button class="update-reload" id="updateReload">Reload</button>
-    <button class="update-dismiss" id="updateDismiss">✕</button>
+  <!-- SUBJECT SHEET (Attendance) -->
+  <div class="modal-overlay" id="subjOverlay">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <h2 id="subjTitle">New Subject</h2>
+      <input type="text" class="modal-input" id="subjName" placeholder="e.g. Operating Systems" maxlength="40">
+      <div class="time-row">
+        <label class="time-field"><span class="sec-lbl">Attended</span><input type="number" class="modal-input"
+            id="subjA" min="0" inputmode="numeric" value="0"></label>
+        <label class="time-field"><span class="sec-lbl">Total classes</span><input type="number" class="modal-input"
+            id="subjT" min="0" inputmode="numeric" value="0"></label>
+      </div>
+      <div class="modal-err" id="subjErr" role="alert"></div>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="subjCancel">Cancel</button>
+        <button class="btn-save" id="subjSave">Save subject</button>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- OFFLINE INDICATOR -->
-<div id="offlineBar" style="
+  <!-- BOTTOM NAVIGATION -->
+  <nav class="bottom-nav" id="bottomNav" aria-label="Main">
+    <button class="nav-item active" data-tab="habits"><span class="nav-ind"><svg width="24" height="24"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M8 12.5l3 3 5-6" />
+        </svg></span><span class="nav-lbl">Habits</span></button>
+    <button class="nav-item" data-tab="routine"><span class="nav-ind"><svg width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7v5l3 2" />
+        </svg></span><span class="nav-lbl">Routine</span></button>
+    <button class="nav-item" data-tab="attendance"><span class="nav-ind"><svg width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="4" width="14" height="17" rx="2" />
+          <path d="M9 4h6v3H9z" />
+          <path d="M9 14l2 2 4-4" />
+        </svg></span><span class="nav-lbl">Attendance</span></button>
+    <button class="nav-item" data-tab="planner"><span class="nav-ind"><svg width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3.5" y="5" width="17" height="15" rx="2.5" />
+          <path d="M3.5 10h17M8 3v4M16 3v4" />
+        </svg></span><span class="nav-lbl">Weekend</span></button>
+    <button class="nav-item" data-tab="games"><span class="nav-ind"><svg width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2.5" y="7" width="19" height="11" rx="5.5" />
+          <path d="M7.5 10.5v4M5.5 12.5h4" />
+          <circle cx="15.5" cy="11.5" r=".9" fill="currentColor" />
+          <circle cx="18" cy="13.5" r=".9" fill="currentColor" />
+        </svg></span><span class="nav-lbl">Games</span></button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- OFFLINE INDICATOR -->
+  <div id="offlineBar" style="
   display:none; position:fixed; top:0; left:0; right:0; z-index:900;
   background:#f59e0b; color:#111; font-size:.75rem; font-weight:700;
   text-align:center; padding:6px; letter-spacing:.05em;
 ">⚡ OFFLINE MODE — changes saved locally</div>
 
+  <!-- Script last, so every element above exists when it runs -->
+  <script src="script.js"></script>
+
 </body>
+
 </html>
