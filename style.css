@@ -12,58 +12,64 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-/* ── THEME TOKENS ── */
+
 :root,
 :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #141218;
-    --card: #211f26;
-    --card2: #2b2930;
-    --border: #3a3741;
-    --text: #e6e0e9;
-    --sub: #a9a3b3;
-    --cell-empty: #302d38;
+    --bg: #0D0814;            /* Nocturnal Obsidian */
+    --card: #191122;          /* Deep Velvet */
+    --card2: #2A1D3A;         /* Midnight Amethyst */
+    --border: #3B2A52;
+    --text: #F9F5EB;          /* Gilded Ivory */
+    --sub: #A294B0;           /* Dusty Lavender */
+    --cell-empty: #2A1D3A;
 
-    --primary: #d0bcff;
-    --on-primary: #381e72;
-    --primary-container: #4f378b;
-    --on-primary-container: #eaddff;
+    --accent: #D4AF37;        /* Champagne Gold */
+    --primary: #D4AF37;
+    --on-primary: #0D0814;
+    --primary-container: #2A1D3A;
+    --on-primary-container: #F9F5EB;
 
-    --danger: #f2b8b5;
-    --danger-bg: rgba(242, 184, 181, .12);
-    --success: #8fd9a8;
-    --success-bg: rgba(143, 217, 168, .14);
-    --nav-bg: rgba(33, 31, 38, .94);
+    --danger: #D9707B;        /* lifted from Muted Crimson #90353E for text legibility */
+    --danger-bg: rgba(144, 53, 62, .32);
+    --success: #5FAE85;       /* lifted from Sage Emerald #346B4E for legibility */
+    --success-bg: rgba(52, 107, 78, .38);
+    --warning: #C59B27;
+    --info: #5E81AC;
+    --nav-bg: rgba(25, 17, 34, .94);
 
-    --shadow: 0 8px 28px rgba(0, 0, 0, .45);
-    --scrim: rgba(0, 0, 0, .55);
-    --header-bg: rgba(20, 18, 24, .86);
+    --shadow: 0 8px 28px rgba(0, 0, 0, .55);
+    --scrim: rgba(5, 2, 10, .65);
+    --header-bg: rgba(13, 8, 20, .86);
 }
 
 :root[data-theme="light"] {
     color-scheme: light;
-    --bg: #fef7ff;
-    --card: #f3edf7;
-    --card2: #ebe5f0;
-    --border: #dcd5e3;
-    --text: #1d1b20;
-    --sub: #6b6573;
-    --cell-empty: #ddd6e6;
+    --bg: #F5EFE6;            /* Ethereal Oatmeal */
+    --card: #FCFAF7;          /* Warm Alabaster */
+    --card2: #ECE2D0;         /* Soft Clay */
+    --border: #DDD0BA;
+    --text: #4A2C40;          /* Royal Plum */
+    --sub: #7D846B;           /* Muted Moss */
+    --cell-empty: #ECE2D0;
 
-    --primary: #6750a4;
-    --on-primary: #ffffff;
-    --primary-container: #eaddff;
-    --on-primary-container: #21005d;
+    --accent: #C59B27;        /* Burnt Brass Gold */
+    --primary: #4A2C40;
+    --on-primary: #F5EFE6;
+    --primary-container: #ECE2D0;
+    --on-primary-container: #4A2C40;
 
-    --danger: #b3261e;
-    --danger-bg: rgba(179, 38, 30, .09);
-    --success: #1b7a44;
-    --success-bg: rgba(27, 122, 68, .12);
-    --nav-bg: rgba(243, 237, 247, .94);
+    --danger: #721C24;        /* Crimson Wine */
+    --danger-bg: rgba(114, 28, 36, .09);
+    --success: #1E4620;       /* Deep Forest Emerald */
+    --success-bg: rgba(30, 70, 32, .11);
+    --warning: #B57A1E;
+    --info: #3E5C76;
+    --nav-bg: rgba(252, 250, 247, .94);
 
-    --shadow: 0 8px 28px rgba(60, 40, 100, .18);
-    --scrim: rgba(30, 20, 50, .35);
-    --header-bg: rgba(254, 247, 255, .86);
+    --shadow: 0 8px 28px rgba(74, 44, 64, .16);
+    --scrim: rgba(74, 44, 64, .35);
+    --header-bg: rgba(245, 239, 230, .86);
 }
 
 html {
@@ -73,7 +79,7 @@ html {
 body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Roboto Flex', 'Google Sans', 'Roboto', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     min-height: 100vh;
     padding-bottom: calc(112px + env(safe-area-inset-bottom));
     padding-left: env(safe-area-inset-left);
@@ -252,7 +258,7 @@ body {
 
 .day-pill.today .dp-num {
     background: var(--t-accent, var(--primary));
-    color: #111;
+    color: #0D0814;
     font-weight: 700;
 }
 
@@ -2050,7 +2056,7 @@ body {
     border: 1px solid var(--border);
     border-radius: 18px;
     padding: 14px 16px;
-    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
     font-size: .84rem;
     line-height: 1.6;
     white-space: pre-wrap;
@@ -2617,9 +2623,9 @@ body.cal-lock { overflow: hidden; }
 }
 
 .cal-sheet {
-    --hc: #a855f7;
-    --hc-soft: rgba(168, 85, 247, .16);
-    --hc-glow: rgba(168, 85, 247, .45);
+    --hc: #C59B27;
+    --hc-soft: rgba(197, 155, 39, .16);
+    --hc-glow: rgba(197, 155, 39, .45);
     --hc-ink: #fff;
     position: relative;
     width: 100%;
@@ -2860,3 +2866,7 @@ body.cal-lock { overflow: hidden; }
 @media (max-height: 640px) {
     .cal-cell { height: 40px; }
 }
+
+/* Numbers & stats in JetBrains Mono */
+.tb-count, .tb-pct, .dp-num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+.add-btn, .today-banner { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent); }
