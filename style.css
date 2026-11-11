@@ -12,64 +12,66 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-
+/* ── THEME TOKENS ── */
+/* Palette — White · Almond · Azure Mist · Terracotta · Steel · Rosemary
+   Light: Almond canvas, White cards, Steel text. Dark: derived from Steel. */
 :root,
 :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #0D0814;            /* Nocturnal Obsidian */
-    --card: #191122;          /* Deep Velvet */
-    --card2: #2A1D3A;         /* Midnight Amethyst */
-    --border: #3B2A52;
-    --text: #F9F5EB;          /* Gilded Ivory */
-    --sub: #A294B0;           /* Dusty Lavender */
-    --cell-empty: #2A1D3A;
+    --bg: #22262C;            /* Deep Steel (derived) */
+    --card: #2C3139;
+    --card2: #414751;         /* Steel */
+    --border: #4F5662;
+    --text: #F2EDE7;         /* Almond */
+    --sub: #AEB6BD;           /* Azure Mist, dimmed */
+    --cell-empty: #363C45;
 
-    --accent: #D4AF37;        /* Champagne Gold */
-    --primary: #D4AF37;
-    --on-primary: #0D0814;
-    --primary-container: #2A1D3A;
-    --on-primary-container: #F9F5EB;
+    --accent: #B78E79;        /* Terracotta */
+    --primary: #B78E79;
+    --on-primary: #22262C;
+    --primary-container: #414751;
+    --on-primary-container: #F2EDE7;
 
-    --danger: #D9707B;        /* lifted from Muted Crimson #90353E for text legibility */
-    --danger-bg: rgba(144, 53, 62, .32);
-    --success: #5FAE85;       /* lifted from Sage Emerald #346B4E for legibility */
-    --success-bg: rgba(52, 107, 78, .38);
-    --warning: #C59B27;
-    --info: #5E81AC;
-    --nav-bg: rgba(25, 17, 34, .94);
+    --danger: #E0907E;
+    --danger-bg: rgba(224, 144, 126, .16);
+    --success: #919F90;       /* Rosemary */
+    --success-bg: rgba(145, 159, 144, .2);
+    --warning: #B78E79;
+    --info: #8FA3B5;
+    --nav-bg: rgba(44, 49, 57, .94);
 
-    --shadow: 0 8px 28px rgba(0, 0, 0, .55);
-    --scrim: rgba(5, 2, 10, .65);
-    --header-bg: rgba(13, 8, 20, .86);
+    --shadow: 0 8px 28px rgba(0, 0, 0, .5);
+    --scrim: rgba(10, 12, 15, .6);
+    --header-bg: rgba(34, 38, 44, .86);
 }
 
 :root[data-theme="light"] {
     color-scheme: light;
-    --bg: #F5EFE6;            /* Ethereal Oatmeal */
-    --card: #FCFAF7;          /* Warm Alabaster */
-    --card2: #ECE2D0;         /* Soft Clay */
-    --border: #DDD0BA;
-    --text: #4A2C40;          /* Royal Plum */
-    --sub: #7D846B;           /* Muted Moss */
-    --cell-empty: #ECE2D0;
+    --bg: #F2EDE7;            /* Almond */
+    --card: #FFFFFF;          /* White */
+    --card2: #E8EBED;         /* Azure Mist */
+    --border: #DAD8D5;
+    --text: #414751;          /* Steel */
+    --sub: #6E7B6D;           /* Rosemary, deepened for contrast */
+    --cell-empty: #E8EBED;
 
-    --accent: #C59B27;        /* Burnt Brass Gold */
-    --primary: #4A2C40;
-    --on-primary: #F5EFE6;
-    --primary-container: #ECE2D0;
-    --on-primary-container: #4A2C40;
+    --accent: #B78E79;        /* Terracotta */
+    --primary: #414751;
+    --on-primary: #FFFFFF;
+    --primary-container: #E8EBED;
+    --on-primary-container: #414751;
 
-    --danger: #721C24;        /* Crimson Wine */
-    --danger-bg: rgba(114, 28, 36, .09);
-    --success: #1E4620;       /* Deep Forest Emerald */
-    --success-bg: rgba(30, 70, 32, .11);
-    --warning: #B57A1E;
-    --info: #3E5C76;
-    --nav-bg: rgba(252, 250, 247, .94);
+    --danger: #A5483A;
+    --danger-bg: rgba(165, 72, 58, .1);
+    --success: #5F7A5E;
+    --success-bg: rgba(145, 159, 144, .25);
+    --warning: #B78E79;
+    --info: #5C7285;
+    --nav-bg: rgba(255, 255, 255, .94);
 
-    --shadow: 0 8px 28px rgba(74, 44, 64, .16);
-    --scrim: rgba(74, 44, 64, .35);
-    --header-bg: rgba(245, 239, 230, .86);
+    --shadow: 0 8px 28px rgba(65, 71, 81, .14);
+    --scrim: rgba(65, 71, 81, .35);
+    --header-bg: rgba(242, 237, 231, .86);
 }
 
 html {
@@ -258,7 +260,7 @@ body {
 
 .day-pill.today .dp-num {
     background: var(--t-accent, var(--primary));
-    color: #0D0814;
+    color: #22262C;
     font-weight: 700;
 }
 
@@ -2623,9 +2625,9 @@ body.cal-lock { overflow: hidden; }
 }
 
 .cal-sheet {
-    --hc: #C59B27;
-    --hc-soft: rgba(197, 155, 39, .16);
-    --hc-glow: rgba(197, 155, 39, .45);
+    --hc: #B78E79;
+    --hc-soft: rgba(183, 142, 121, .16);
+    --hc-glow: rgba(183, 142, 121, .45);
     --hc-ink: #fff;
     position: relative;
     width: 100%;
