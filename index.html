@@ -121,6 +121,11 @@
     </div>
   </div>
 
+  <!-- HABIT CALENDAR (opened from a habit's ··· menu; rendered by script.js) -->
+  <div class="cal-overlay" id="calOverlay">
+    <div class="cal-sheet" id="calSheet" tabindex="-1" role="dialog" aria-modal="true" aria-label="Habit calendar"></div>
+  </div>
+
   <!-- CONFIRM DELETE -->
   <div class="confirm-overlay" id="confirmOverlay">
     <div class="confirm-box">
@@ -174,6 +179,13 @@
         <div class="s-sub">Open Planner on weekends</div>
       </div>
       <div class="toggle" id="autoWkToggle"></div>
+    </div>
+    <div class="s-item">
+      <div>
+        <div class="s-label">Haptic feedback</div>
+        <div class="s-sub">Tiny vibration on taps &amp; check-offs</div>
+      </div>
+      <div class="toggle" id="hapticToggle"></div>
     </div>
     <!-- DATA SAFETY -->
     <span class="s-section-title">Data Safety</span>
@@ -283,7 +295,7 @@
           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3.5" y="5" width="17" height="15" rx="2.5" />
           <path d="M3.5 10h17M8 3v4M16 3v4" />
-        </svg></span><span class="nav-lbl">Weekend</span></button>
+        </svg></span><span class="nav-lbl">Planner</span></button>
     <button class="nav-item" data-tab="games"><span class="nav-ind"><svg width="24" height="24" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2.5" y="7" width="19" height="11" rx="5.5" />
@@ -301,6 +313,9 @@
   background:#f59e0b; color:#111; font-size:.75rem; font-weight:700;
   text-align:center; padding:6px; letter-spacing:.05em;
 ">⚡ OFFLINE MODE — changes saved locally</div>
+
+  <!-- ZIP PLAY SCREEN (full-screen, opened by the Play button) -->
+  <div class="zip-overlay" id="zipOverlay" role="dialog" aria-modal="true" aria-label="Zip puzzle"></div>
 
   <!-- Script last, so every element above exists when it runs -->
   <script src="script.js"></script>
