@@ -4967,3 +4967,35 @@ body {
     color: var(--on-primary-container);
     border-color: var(--primary);
 }
+
+
+/* ── WORKOUT: mobile alignment fixes ── */
+.workout-timer-card,
+.workout-banner,
+.wt-alt-picker-box,
+.wt-alt-row { min-width: 0; }
+.workout-timer-card { padding: 16px 16px 18px; }
+.wt-select {
+    min-width: 0;
+    max-width: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.wt-sub-btn { min-width: 0; white-space: nowrap; }
+.w-day-btn { flex: 1 1 0; min-width: 52px; }
+
+@media (max-width: 520px) {
+    /* all 7 days fit on screen, no sideways scroll needed */
+    .workout-day-strip { gap: 6px; }
+    .w-day-btn { min-width: 0; padding: 10px 2px; border-radius: 14px; }
+    .w-day-btn .w-day-name { font-size: .72rem; letter-spacing: 0; }
+    .w-day-btn .w-day-sub { font-size: .6rem; }
+    .w-day-btn.is-today::before { font-size: .5rem; padding: 1px 4px; }
+
+    /* exercise pickers: label on top, dropdown full width */
+    .wt-alt-row { flex-direction: column; align-items: stretch; gap: 6px; }
+    .wt-alt-label { justify-content: flex-start; }
+    .wt-select { width: 100%; flex: none; }
+    .wt-sub-btn { font-size: .7rem; padding: 8px 6px; gap: 4px; }
+}
