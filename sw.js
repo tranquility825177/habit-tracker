@@ -1,5 +1,5 @@
-const CACHE_NAME = 'habit-tracker-v8';
-const RUNTIME_CACHE = 'habit-tracker-runtime-v8';
+const CACHE_NAME = 'habit-tracker-v9';
+const RUNTIME_CACHE = 'habit-tracker-runtime-v9';
 
 const PRECACHE_URLS = [
   './index.html',
