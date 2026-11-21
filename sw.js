@@ -1,10 +1,5 @@
-// ── Habit Tracker Service Worker ─────────────────────────────────────────────
-// Strategy: network-first for the app shell (HTML/CSS/JS) so updates always show
-// when online, cache-first for static assets (icons, fonts).
-// Bump CACHE_NAME whenever you want old caches wiped.
-
-const CACHE_NAME = 'habit-tracker-v3';
-const RUNTIME_CACHE = 'habit-tracker-runtime-v3';
+const CACHE_NAME = 'habit-tracker-v8';
+const RUNTIME_CACHE = 'habit-tracker-runtime-v8';
 
 const PRECACHE_URLS = [
   './index.html',
@@ -15,7 +10,7 @@ const PRECACHE_URLS = [
   './icon-512.png',
 ];
 
-// ── INSTALL ───────────────────────────────────────────────────────────────────
+// ── INSTALL 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -24,7 +19,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// ── ACTIVATE ──────────────────────────────────────────────────────────────────
+// ── ACTIVATE
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(names =>
@@ -37,7 +32,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-// ── FETCH ─────────────────────────────────────────────────────────────────────
+// ── FETCH 
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
@@ -56,7 +51,7 @@ self.addEventListener('fetch', event => {
   event.respondWith(isShell ? networkFirst(request) : cacheFirst(request));
 });
 
-// ── STRATEGIES ────────────────────────────────────────────────────────────────
+// ── STRATEGIES 
 async function networkFirst(request) {
   try {
     const response = await fetch(request);
@@ -92,19 +87,19 @@ async function cacheFirst(request) {
   }
 }
 
-// ── MESSAGE HANDLER (for update reload) ──────────────────────────────────────
+// ── MESSAGE HANDLER (for update reload)
 self.addEventListener('message', event => {
   if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
-// ── BACKGROUND SYNC (future-ready) ────────────────────────────────────────────
+// ── BACKGROUND SYNC (future-ready)
 self.addEventListener('sync', event => {
   if (event.tag === 'sync-habits') {
     console.log('[SW] Background sync triggered');
   }
 });
 
-// ── PUSH NOTIFICATIONS (future-ready) ─────────────────────────────────────────
+// ── PUSH NOTIFICATIONS (future-ready)
 self.addEventListener('push', event => {
   const data = event.data?.json() || {};
   event.waitUntil(
