@@ -3568,7 +3568,7 @@ body.cal-lock {
 }
 
 .toast.info .mi {
-    color: #3b82f6;
+    color: #5b84b1;
 }
 
 /* ═══ BOTTOM NAV — static (no animation, no blur: keeps phones smooth) ═════════ */
@@ -3753,7 +3753,7 @@ body.cal-lock {
     font-variant-numeric: tabular-nums;
 }
 
-.day-pill.today {}
+/* .day-pill.today {} */
 
 @keyframes pulseToday {
 
@@ -4191,6 +4191,7 @@ em[data-count] {
     letter-spacing: .03em;
     font-size: .52rem;
 }
+
 /* ═══ NAV STABILITY — nav bar must never move while tabs switch ═══════════════ */
 html {
     min-height: 100%;
@@ -4225,9 +4226,11 @@ body {
     margin: 12px auto 6px;
     padding: 0 16px;
 }
+
 .routine-seg {
     margin-bottom: 6px;
 }
+
 .routine-pane {
     width: 100%;
 }
@@ -4249,9 +4252,11 @@ body {
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
 }
+
 .workout-day-strip::-webkit-scrollbar {
     display: none;
 }
+
 .w-day-btn {
     flex: 0 0 auto;
     display: flex;
@@ -4268,30 +4273,36 @@ body {
     transition: all .2s cubic-bezier(.16, 1, .3, 1);
     position: relative;
 }
+
 .w-day-btn:active {
     transform: scale(.94);
 }
+
 .w-day-btn.sel {
     background: var(--primary-container);
     color: var(--on-primary-container);
     border-color: var(--primary);
     box-shadow: 0 4px 12px rgba(0, 0, 0, .14);
 }
+
 .w-day-btn .w-day-name {
     font-size: .8rem;
     font-weight: 700;
     letter-spacing: .02em;
     text-transform: uppercase;
 }
+
 .w-day-btn .w-day-sub {
     font-size: .65rem;
     color: var(--sub);
     margin-top: 2px;
 }
+
 .w-day-btn.sel .w-day-sub {
     color: var(--on-primary-container);
     opacity: .85;
 }
+
 .w-day-btn.is-today::before {
     content: 'Today';
     position: absolute;
@@ -4305,6 +4316,7 @@ body {
     letter-spacing: .03em;
     text-transform: uppercase;
 }
+
 .w-day-btn .w-day-dot {
     position: absolute;
     bottom: 3px;
@@ -4327,21 +4339,25 @@ body {
     position: relative;
     overflow: hidden;
 }
+
 .wb-left {
     flex: 1;
     min-width: 0;
 }
+
 .wb-focus-row {
     display: flex;
     align-items: center;
     gap: 8px;
 }
+
 .wb-focus-title {
     font-size: 1.15rem;
     font-weight: 700;
     color: var(--text);
     letter-spacing: -.01em;
 }
+
 .wb-edit-btn {
     background: none;
     border: none;
@@ -4354,10 +4370,12 @@ body {
     justify-content: center;
     transition: color .2s, background .2s;
 }
+
 .wb-edit-btn:hover {
     color: var(--primary);
     background: var(--card2);
 }
+
 .wb-stats {
     font-size: .74rem;
     color: var(--sub);
@@ -4366,18 +4384,21 @@ body {
     gap: 8px;
     flex-wrap: wrap;
 }
+
 .wb-bar-wrap {
     height: 6px;
     border-radius: 999px;
     background: var(--cell-empty);
     overflow: hidden;
 }
+
 .wb-bar {
     height: 100%;
     border-radius: 999px;
     background: var(--primary);
     transition: width .35s ease;
 }
+
 .wb-pct {
     font-size: 1.25rem;
     font-weight: 700;
@@ -4395,6 +4416,7 @@ body {
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
 }
+
 .wt-mode-seg {
     display: flex;
     background: var(--card2);
@@ -4402,6 +4424,7 @@ body {
     padding: 3px;
     margin-bottom: 14px;
 }
+
 .wt-mode-btn {
     flex: 1;
     border: none;
@@ -4418,15 +4441,18 @@ body {
     justify-content: center;
     gap: 6px;
 }
+
 .wt-mode-btn.sel {
     background: var(--primary);
     color: var(--on-primary);
     box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
 }
+
 .wt-ex-info {
     text-align: center;
     margin-bottom: 6px;
 }
+
 .wt-ex-name {
     font-size: 1.15rem;
     font-weight: 700;
@@ -4435,6 +4461,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .wt-ex-set {
     font-size: .78rem;
     color: var(--sub);
@@ -4444,6 +4471,7 @@ body {
     justify-content: center;
     gap: 8px;
 }
+
 .wt-status-chip {
     display: inline-block;
     padding: 2px 10px;
@@ -4453,14 +4481,17 @@ body {
     text-transform: uppercase;
     letter-spacing: .06em;
 }
+
 .wt-status-chip.work {
     background: rgba(249, 115, 22, .2);
     color: #f97316;
 }
+
 .wt-status-chip.rest {
     background: rgba(20, 184, 166, .2);
     color: #14b8a6;
 }
+
 .wt-status-chip.ready {
     background: rgba(99, 102, 241, .2);
     color: #818cf8;
@@ -4471,6 +4502,7 @@ body {
     padding: 8px 0;
     position: relative;
 }
+
 .wt-digits {
     font-size: 3.8rem;
     font-weight: 800;
@@ -4481,13 +4513,20 @@ body {
     transition: color .2s;
     display: inline-block;
 }
+
 .wt-digits.pulse-warn {
     animation: timerPulse 0.45s ease infinite alternate;
     color: #ef4444;
 }
+
 @keyframes timerPulse {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.08); }
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.08);
+    }
 }
 
 .wt-presets {
@@ -4498,6 +4537,7 @@ body {
     flex-wrap: wrap;
     margin: 8px 0 14px;
 }
+
 .wt-preset-chip {
     background: var(--card2);
     border: 1px solid var(--border);
@@ -4509,9 +4549,11 @@ body {
     cursor: pointer;
     transition: all .2s;
 }
+
 .wt-preset-chip:active {
     transform: scale(.95);
 }
+
 .wt-preset-chip.sel {
     background: var(--primary-container);
     color: var(--on-primary-container);
@@ -4524,6 +4566,7 @@ body {
     justify-content: center;
     gap: 12px;
 }
+
 .wt-btn-circle {
     width: 44px;
     height: 44px;
@@ -4537,9 +4580,11 @@ body {
     justify-content: center;
     transition: all .2s;
 }
+
 .wt-btn-circle:active {
     transform: scale(.9);
 }
+
 .wt-btn-main {
     flex: 1;
     max-width: 170px;
@@ -4558,13 +4603,16 @@ body {
     box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
     transition: all .2s;
 }
+
 .wt-btn-main:active {
     transform: scale(.96);
 }
+
 .wt-btn-main.running {
     background: #f97316;
     color: #fff;
 }
+
 .wt-btn-circle.active-sound {
     color: var(--primary);
     background: var(--primary-container);
@@ -4578,6 +4626,7 @@ body {
     border-top: 1px solid var(--border);
     padding-top: 8px;
 }
+
 .wt-lap-row {
     display: flex;
     justify-content: space-between;
@@ -4586,6 +4635,7 @@ body {
     color: var(--sub);
     font-variant-numeric: tabular-nums;
 }
+
 .wt-lap-row b {
     color: var(--text);
 }
@@ -4597,16 +4647,19 @@ body {
     justify-content: space-between;
     margin: 18px 4px 10px;
 }
+
 .ex-sec-title {
     font-size: .95rem;
     font-weight: 700;
     color: var(--text);
     letter-spacing: -.01em;
 }
+
 .ex-top-actions {
     display: flex;
     gap: 8px;
 }
+
 .ex-pill-btn {
     background: var(--card);
     border: 1px solid var(--border);
@@ -4621,6 +4674,7 @@ body {
     gap: 4px;
     transition: all .2s;
 }
+
 .ex-pill-btn:active {
     transform: scale(.95);
 }
@@ -4630,6 +4684,7 @@ body {
     flex-direction: column;
     gap: 12px;
 }
+
 .ex-card {
     background: var(--card);
     border-radius: 22px;
@@ -4640,16 +4695,19 @@ body {
     border: 1px solid transparent;
     transition: all .2s cubic-bezier(.16, 1, .3, 1);
 }
+
 .ex-card.done {
     opacity: .75;
     background: color-mix(in srgb, var(--card) 92%, var(--success) 8%);
     border-color: color-mix(in srgb, var(--success) 35%, transparent);
 }
+
 .ex-card-top {
     display: flex;
     align-items: center;
     gap: 12px;
 }
+
 .ex-icon-box {
     width: 42px;
     height: 42px;
@@ -4659,10 +4717,12 @@ body {
     justify-content: center;
     flex-shrink: 0;
 }
+
 .ex-mid {
     flex: 1;
     min-width: 0;
 }
+
 .ex-name-text {
     font-size: .95rem;
     font-weight: 600;
@@ -4671,20 +4731,24 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .ex-card.done .ex-name-text {
     text-decoration: line-through;
     color: var(--sub);
 }
+
 .ex-sub-meta {
     font-size: .72rem;
     color: var(--sub);
     margin-top: 2px;
 }
+
 .ex-right-actions {
     display: flex;
     align-items: center;
     gap: 6px;
 }
+
 .ex-timer-launch {
     width: 36px;
     height: 36px;
@@ -4698,6 +4762,7 @@ body {
     justify-content: center;
     transition: all .2s;
 }
+
 .ex-timer-launch:active {
     transform: scale(.9);
 }
@@ -4712,11 +4777,13 @@ body {
     padding-top: 8px;
     border-top: 1px dashed var(--border);
 }
+
 .ex-sets-ctrl {
     display: flex;
     align-items: center;
     gap: 6px;
 }
+
 .ex-sets-lbl {
     font-size: .68rem;
     font-weight: 700;
@@ -4724,6 +4791,7 @@ body {
     text-transform: uppercase;
     letter-spacing: .04em;
 }
+
 .ex-stepper {
     display: inline-flex;
     align-items: center;
@@ -4733,6 +4801,7 @@ body {
     padding: 2px 4px;
     gap: 4px;
 }
+
 .ex-step-btn {
     width: 22px;
     height: 22px;
@@ -4748,11 +4817,13 @@ body {
     justify-content: center;
     transition: all .15s;
 }
+
 .ex-step-btn:active {
     transform: scale(.85);
     background: var(--primary);
     color: var(--on-primary);
 }
+
 .ex-step-val {
     font-size: .75rem;
     font-weight: 700;
@@ -4760,12 +4831,14 @@ body {
     min-width: 16px;
     text-align: center;
 }
+
 .ex-bubbles-row {
     display: flex;
     align-items: center;
     gap: 6px;
     flex-wrap: wrap;
 }
+
 .ex-set-bubble {
     width: 28px;
     height: 28px;
@@ -4781,9 +4854,11 @@ body {
     justify-content: center;
     transition: all .2s cubic-bezier(.16, 1, .3, 1);
 }
+
 .ex-set-bubble:active {
     transform: scale(.88);
 }
+
 .ex-set-bubble.done {
     background: var(--success);
     color: #fff;
@@ -4800,6 +4875,7 @@ body {
     margin: 4px 0 12px;
     gap: 4px;
 }
+
 .wt-sub-btn {
     flex: 1;
     border: none;
@@ -4816,6 +4892,7 @@ body {
     justify-content: center;
     gap: 5px;
 }
+
 .wt-sub-btn.sel {
     background: var(--primary-container);
     color: var(--on-primary-container);
@@ -4832,12 +4909,14 @@ body {
     flex-direction: column;
     gap: 8px;
 }
+
 .wt-alt-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
 }
+
 .wt-alt-label {
     font-size: .75rem;
     font-weight: 600;
@@ -4847,6 +4926,7 @@ body {
     gap: 6px;
     white-space: nowrap;
 }
+
 .wt-pill-tag {
     font-size: .62rem;
     font-weight: 800;
@@ -4854,14 +4934,17 @@ body {
     border-radius: 6px;
     text-transform: uppercase;
 }
+
 .wt-pill-tag.tag-a {
     background: rgba(249, 115, 22, .25);
     color: #f97316;
 }
+
 .wt-pill-tag.tag-b {
     background: rgba(59, 130, 246, .25);
-    color: #3b82f6;
+    color: #5b84b1;
 }
+
 .wt-select {
     flex: 1;
     background: var(--card);
@@ -4876,13 +4959,16 @@ body {
     cursor: pointer;
     max-width: 220px;
 }
+
 .wt-select:focus {
     border-color: var(--primary);
 }
+
 .wt-alt-swap-row {
     text-align: center;
     margin: -4px 0;
 }
+
 .wt-swap-btn {
     background: none;
     border: none;
@@ -4894,6 +4980,7 @@ body {
     border-radius: 999px;
     transition: background .15s;
 }
+
 .wt-swap-btn:hover {
     background: color-mix(in srgb, var(--primary) 12%, transparent);
 }
@@ -4905,6 +4992,7 @@ body {
     gap: 4px;
     margin-bottom: 6px;
 }
+
 .wt-alt-active-tag {
     font-size: .85rem;
     font-weight: 700;
@@ -4914,6 +5002,7 @@ body {
     align-items: center;
     gap: 6px;
 }
+
 .wt-alt-next-tag {
     font-size: .72rem;
     color: var(--sub);
@@ -4929,28 +5018,34 @@ body {
     margin: 6px 0 10px;
     flex-wrap: wrap;
 }
+
 .wt-sets-lbl {
     font-size: .74rem;
     font-weight: 700;
     color: var(--sub);
     text-transform: uppercase;
 }
+
 .wt-stepper {
     padding: 3px 6px;
     gap: 6px;
 }
+
 .wt-stepper .ex-step-btn {
     width: 24px;
     height: 24px;
 }
+
 .wt-stepper .ex-step-val {
     font-size: .85rem;
     min-width: 18px;
 }
+
 .wt-quick-sets {
     display: flex;
     gap: 4px;
 }
+
 .wt-qset-btn {
     background: var(--card2);
     border: 1px solid var(--border);
@@ -4962,6 +5057,7 @@ body {
     cursor: pointer;
     transition: all .15s;
 }
+
 .wt-qset-btn.sel {
     background: var(--primary-container);
     color: var(--on-primary-container);
@@ -4973,8 +5069,14 @@ body {
 .workout-timer-card,
 .workout-banner,
 .wt-alt-picker-box,
-.wt-alt-row { min-width: 0; }
-.workout-timer-card { padding: 16px 16px 18px; }
+.wt-alt-row {
+    min-width: 0;
+}
+
+.workout-timer-card {
+    padding: 16px 16px 18px;
+}
+
 .wt-select {
     min-width: 0;
     max-width: none;
@@ -4982,20 +5084,893 @@ body {
     white-space: nowrap;
     overflow: hidden;
 }
-.wt-sub-btn { min-width: 0; white-space: nowrap; }
-.w-day-btn { flex: 1 1 0; min-width: 52px; }
+
+.wt-sub-btn {
+    min-width: 0;
+    white-space: nowrap;
+}
+
+.w-day-btn {
+    flex: 1 1 0;
+    min-width: 52px;
+}
 
 @media (max-width: 520px) {
+
     /* all 7 days fit on screen, no sideways scroll needed */
-    .workout-day-strip { gap: 6px; }
-    .w-day-btn { min-width: 0; padding: 10px 2px; border-radius: 14px; }
-    .w-day-btn .w-day-name { font-size: .72rem; letter-spacing: 0; }
-    .w-day-btn .w-day-sub { font-size: .6rem; }
-    .w-day-btn.is-today::before { font-size: .5rem; padding: 1px 4px; }
+    .workout-day-strip {
+        gap: 6px;
+    }
+
+    .w-day-btn {
+        min-width: 0;
+        padding: 10px 2px;
+        border-radius: 14px;
+    }
+
+    .w-day-btn .w-day-name {
+        font-size: .72rem;
+        letter-spacing: 0;
+    }
+
+    .w-day-btn .w-day-sub {
+        font-size: .6rem;
+    }
+
+    .w-day-btn.is-today::before {
+        font-size: .5rem;
+        padding: 1px 4px;
+    }
 
     /* exercise pickers: label on top, dropdown full width */
-    .wt-alt-row { flex-direction: column; align-items: stretch; gap: 6px; }
-    .wt-alt-label { justify-content: flex-start; }
-    .wt-select { width: 100%; flex: none; }
-    .wt-sub-btn { font-size: .7rem; padding: 8px 6px; gap: 4px; }
+    .wt-alt-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+    }
+
+    .wt-alt-label {
+        justify-content: flex-start;
+    }
+
+    .wt-select {
+        width: 100%;
+        flex: none;
+    }
+
+    .wt-sub-btn {
+        font-size: .7rem;
+        padding: 8px 6px;
+        gap: 4px;
+    }
+}
+
+
+/* ── EXERCISE LIST: collapsible section + cleaner cards ── */
+.ex-collapse-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 18px 0 10px;
+    padding: 12px 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: transform .15s;
+}
+
+.ex-collapse-head:active {
+    transform: scale(.98);
+}
+
+.ex-collapse-head .ex-sec-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.ex-count-chip {
+    font-size: .7rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--card2);
+    border-radius: 999px;
+    padding: 3px 10px;
+    white-space: nowrap;
+}
+
+.ex-chev {
+    display: flex;
+    color: var(--sub);
+    transition: transform .25s;
+}
+
+.ex-collapse-head[aria-expanded="true"] .ex-chev {
+    transform: rotate(180deg);
+}
+
+.ex-actions-row {
+    display: flex;
+    gap: 8px;
+    margin: 0 0 12px;
+}
+
+.ex-actions-row .ex-pill-btn {
+    flex: 1 1 0;
+    justify-content: center;
+    padding: 9px 12px;
+}
+
+/* card: full-width name that wraps instead of being cut off */
+.ex-card-top {
+    align-items: flex-start;
+}
+
+.ex-name-text {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
+    line-height: 1.3;
+}
+
+.ex-menu-btn {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.ex-sets-tracker {
+    flex-wrap: nowrap;
+}
+
+.ex-bubbles-row {
+    flex: 1;
+    min-width: 0;
+}
+
+.ex-right-actions {
+    flex-shrink: 0;
+}
+
+
+/* ── RESPONSIVE TOAST FIX ── */
+
+.toast {
+    left: 50%;
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
+
+    /* Allow long messages to wrap */
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+
+    /* Keep content properly aligned */
+    justify-content: center;
+    text-align: center;
+    padding: 12px 16px;
+    gap: 8px;
+}
+
+.toast span {
+    min-width: 0;
+    flex: 0 1 auto;
+}
+
+.toast .mi {
+    flex-shrink: 0;
+}
+
+/* Smaller mobile screens */
+@media (max-width: 480px) {
+    .toast {
+        max-width: calc(100vw - 28px);
+        font-size: 0.8rem;
+        padding: 11px 14px;
+        border-radius: 18px;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   LOOP THEME  ×  MY-TASKS LAYOUT                                    (v6 re-skin)
+   ─ Theme  : cream paper, slate-blue ink, sky-blue accents, wavy line, black pill
+              nav, Poppins + Pacifico.  Dark mode = deep maroon backdrop.
+   ─ Layout : centred title + month, tall date pills on a curved band, status-
+              notched pastel cards with progress, time-rail timeline with dashed
+              dividers.
+   Everything below overrides earlier rules; keep it last.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── TOKENS ── */
+:root,
+:root[data-theme="dark"] {
+    --bg: #121b2d;
+    --card: #1d2940;
+    --card2: #27364f;
+    --border: #364764;
+    --text: #f4f0de;
+    --sub: #9fb1ca;
+    --cell-empty: #2a3a56;
+
+    --primary: #a6cbee;
+    --on-primary: #10243b;
+    --primary-container: #3b5d84;
+    --on-primary-container: #f4f0de;
+
+    --danger: #f5b5ab;
+    --danger-bg: rgba(245, 181, 171, .14);
+    --success: #b9e3a3;
+    --success-bg: rgba(185, 227, 163, .15);
+    --nav-bg: #0a101c;
+
+    --shadow: 0 10px 30px rgba(0, 0, 0, .55);
+    --scrim: rgba(4, 9, 18, .62);
+    --header-bg: rgba(18, 27, 45, .92);
+    --band: #1d2940;
+
+    --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='12' viewBox='0 0 120 12'%3E%3Cpath d='M0 6 Q15 -1 30 6 T60 6 T90 6 T120 6' fill='none' stroke='%23a6cbee' stroke-width='1.4'/%3E%3C/svg%3E");
+}
+
+:root[data-theme="light"] {
+    --bg: #fefbe8;
+    --card: #e1ecf7;
+    --card2: #d2e2f3;
+    --border: #b4c9de;
+    --text: #1d2b3a;
+    --sub: #5b7189;
+    --cell-empty: #d5e3f1;
+
+    --primary: #4f6f8f;
+    --on-primary: #fffbe6;
+    --primary-container: #a6cbee;
+    --on-primary-container: #17304a;
+
+    --danger: #b3473f;
+    --danger-bg: rgba(179, 71, 63, .1);
+    --success: #3d8a5f;
+    --success-bg: rgba(61, 138, 95, .13);
+    --nav-bg: #15181d;
+
+    --shadow: 0 10px 28px rgba(29, 43, 58, .2);
+    --scrim: rgba(29, 43, 58, .38);
+    --header-bg: rgba(254, 251, 232, .94);
+    --band: #e1ecf7;
+
+    --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='12' viewBox='0 0 120 12'%3E%3Cpath d='M0 6 Q15 -1 30 6 T60 6 T90 6 T120 6' fill='none' stroke='%234f6f8f' stroke-width='1.4'/%3E%3C/svg%3E");
+}
+
+:root {
+    /* status colours for cards (same in both themes; text on them is always dark ink) */
+    --st-done: #cde9bb;
+    --st-todo: #bcd9f2;
+    --st-run: #d9d2f0;
+    --ink: #1d2b3a;
+}
+
+body {
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+/* ── HEADER: [spacer] [title + month] [settings] ── */
+.header {
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    align-items: center;
+    padding: max(14px, calc(8px + env(safe-area-inset-top))) 16px 16px;
+}
+
+.header::before {
+    content: '';
+    grid-column: 1;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 12px;
+    background: var(--wave) repeat-x center / 120px 12px;
+    pointer-events: none;
+}
+
+.header-left {
+    grid-column: 2;
+    text-align: center;
+    min-width: 0;
+}
+
+.header-left h1 {
+    font-family: 'Pacifico', 'Poppins', cursive;
+    font-weight: 400;
+    font-size: 1.7rem;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: var(--primary);
+    white-space: nowrap;
+    overflow: visible;          /* script font has tall swashes + descenders: never clip them */
+    padding: 2px 0 6px;
+}
+
+.header-left .hdate {
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 0;
+}
+
+.icon-btn {
+    grid-column: 3;
+    justify-self: end;
+    width: 42px;
+    height: 42px;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+}
+
+/* ── SUMMARY BANNER + ADD BUTTON ── */
+.today-banner {
+    border-radius: 26px;
+}
+
+.add-btn {
+    height: 52px;
+    border-radius: 20px;
+    background: var(--primary);
+    color: var(--on-primary);
+}
+
+/* ── STATUS-NOTCHED CARD (habits + timeline blocks) ── */
+.hc-tab {
+    position: absolute;
+    left: 0;
+    top: -30px;
+    height: 30px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    background: var(--st);
+    border-radius: 18px 18px 0 0;
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+/* concave fillet where the tab meets the card */
+.hc-tab::after {
+    content: '';
+    position: absolute;
+    right: -18px;
+    bottom: 0;
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 100% 0, transparent 17.5px, var(--st) 18px);
+}
+
+.hc-prog {
+    position: absolute;
+    right: 8px;
+    top: -23px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--sub);
+}
+
+.hc-prog i {
+    display: block;
+    width: 78px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+    overflow: hidden;
+}
+
+.hc-prog u {
+    display: block;
+    height: 100%;
+    border-radius: 2px;
+    background: var(--primary);
+    text-decoration: none;
+    transition: width .4s cubic-bezier(.16, 1, .3, 1);
+}
+
+.hc-prog b {
+    min-width: 2.5em;
+    text-align: right;
+    font-weight: 600;
+}
+
+/* shared pastel-card ink */
+.habit-card,
+.tl-card {
+    color: var(--ink);
+}
+
+.habit-card .habit-name,
+.tl-card .tl-name {
+    color: var(--ink);
+}
+
+.habit-card .habit-streak,
+.tl-card .tl-meta {
+    color: rgba(29, 43, 58, .68);
+}
+
+.habit-card .habit-check-btn,
+.tl-card .habit-check-btn {
+    border-color: rgba(29, 43, 58, .5);
+}
+
+.habit-card .habit-check-btn.checked,
+.tl-card .habit-check-btn.checked {
+    border-color: transparent;
+}
+
+.habit-card .habit-menu-btn,
+.tl-card .habit-menu-btn {
+    color: rgba(29, 43, 58, .7);
+}
+
+.habit-card .habit-menu-btn:hover,
+.tl-card .habit-menu-btn:hover {
+    background: rgba(255, 255, 255, .5);
+    color: var(--ink);
+}
+
+.habit-card .flame.on,
+.tl-card .flame.on {
+    color: #4f6f8f;
+}
+
+/* diamond icon tile */
+.habit-card .habit-icon,
+.tl-card .habit-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    margin: 0 9px 0 6px;
+    transform: rotate(45deg);
+    background: var(--ink) !important;
+    flex-shrink: 0;
+}
+
+.habit-card .habit-icon .mi,
+.tl-card .habit-icon .mi {
+    width: 19px;
+    height: 19px;
+    transform: rotate(-45deg);
+}
+
+/* ── HABIT CARDS ── */
+.habits-wrap {
+    padding: 44px 16px 12px;
+    gap: 46px;
+}
+
+.habit-card {
+    --st: var(--st-todo);
+    position: relative;
+    overflow: visible;
+    background: var(--st);
+    border-radius: 0 26px 26px 26px;
+}
+
+.habit-card.done {
+    --st: var(--st-done);
+}
+
+.habit-card .hc-tab::before {
+    content: 'To do';
+}
+
+.habit-card.done .hc-tab::before {
+    content: 'Completed';
+}
+
+.habit-card.done .habit-name {
+    color: rgba(29, 43, 58, .55);
+}
+
+.habit-head {
+    padding: 18px 12px 10px 8px;
+}
+
+.drag-handle .dh-line {
+    background: var(--ink);
+}
+
+.habit-card .stat-box {
+    background: rgba(255, 255, 255, .55);
+}
+
+.habit-card .stat-val {
+    color: var(--ink);
+}
+
+.habit-card .stat-lbl,
+.habit-card .day-label-txt,
+.habit-card .month-lbl {
+    color: rgba(29, 43, 58, .62);
+}
+
+.habit-card .stat-bar-wrap {
+    background: rgba(29, 43, 58, .14);
+}
+
+.habit-card .t-cell {
+    background: rgba(29, 43, 58, .13);
+}
+
+/* ── TIMELINE → time rail + dashed dividers (Routine & Weekend planner) ── */
+.timeline {
+    padding: 10px 16px 6px;
+}
+
+.tl-item {
+    --st: var(--st-todo);
+    grid-template-columns: 50px 1fr;
+    gap: 0 12px;
+    margin: 0;
+    padding: 42px 0 22px;
+    border-bottom: 1.5px dashed var(--border);
+}
+
+.tl-item:last-child {
+    border-bottom: 0;
+}
+
+.tl-item.done {
+    --st: var(--st-done);
+}
+
+.tl-item.now {
+    --st: var(--st-run);
+}
+
+.tl-rail {
+    display: none;
+}
+
+.tl-time {
+    position: relative;
+    margin-top: -30px;
+    padding: 2px 0;
+    align-items: flex-start;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.tl-time::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 26px;
+    bottom: 26px;
+    border-left: 1.5px dashed var(--sub);
+    opacity: .6;
+}
+
+.tl-time b,
+.tl-time span {
+    font-size: .76rem;
+    font-weight: 600;
+    color: var(--sub);
+}
+
+.tl-item.now .tl-time b {
+    color: var(--text);
+}
+
+.tl-card {
+    position: relative;
+    overflow: visible;
+    min-height: 84px;
+    padding: 18px 8px 18px 10px;
+    background: var(--st);
+    border-radius: 0 24px 24px 24px;
+}
+
+.tl-item.now .tl-card {
+    background: var(--st);
+    color: var(--ink);
+}
+
+.tl-item.done .tl-card {
+    opacity: 1;
+}
+
+.tl-item.done .tl-name {
+    color: rgba(29, 43, 58, .55);
+}
+
+.tl-item.now .tl-meta {
+    color: rgba(29, 43, 58, .75);
+    opacity: 1;
+}
+
+.tl-item .hc-tab::before {
+    content: 'Upcoming';
+}
+
+.tl-item.done .hc-tab::before {
+    content: 'Completed';
+}
+
+.tl-item.now .hc-tab::before {
+    content: 'Running';
+}
+
+/* ── BOTTOM NAV → floating black pill ── */
+.bottom-nav {
+    left: 14px;
+    right: 14px;
+    margin: 0 auto;
+    max-width: 520px;
+    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+    border-radius: 32px;
+    background: var(--nav-bg);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+    padding: 8px 6px;
+}
+
+.nav-item {
+    color: rgba(255, 248, 220, .62);
+}
+
+.nav-item.active {
+    color: #fffbe6;
+}
+
+.nav-item.active .nav-ind {
+    background: var(--primary-container);
+    color: var(--on-primary-container);
+}
+
+.nav-lbl {
+    font-size: .62rem;
+    font-weight: 500;
+}
+
+.toast {
+    bottom: calc(100px + env(safe-area-inset-bottom));
+}
+
+.update-banner {
+    bottom: calc(96px + env(safe-area-inset-bottom));
+}
+
+/* ── SHEETS, DIALOGS, FIELDS ── */
+.modal {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-bottom: 0;
+    border-radius: 30px 30px 0 0;
+}
+
+.modal h2,
+.settings-head h2,
+.confirm-box h3 {
+    font-family: 'Pacifico', 'Poppins', cursive;
+    font-weight: 400;
+    color: var(--primary);
+}
+
+.confirm-box {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+}
+
+.modal-input {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+}
+
+.modal-input:focus {
+    border-color: var(--primary);
+}
+
+.btn-save {
+    border-radius: 20px;
+}
+
+.btn-cancel {
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+}
+
+.seg,
+.sub-seg {
+    border: 1.5px solid var(--border);
+}
+
+.att-card,
+.game-card,
+.s-item,
+.hint-chip,
+.zip-lb {
+    border: 1.5px solid var(--border);
+}
+
+.settings-panel {
+    border-left: 1.5px solid var(--border);
+}
+
+/* desktop: keep the curved band edge-to-edge of the column only */
+@media (min-width: 700px) {
+    .week-wrap {
+        border-radius: 0 0 28px 28px;
+    }
+}
+
+/* dark: lift the nav off the navy backdrop */
+:root[data-theme="dark"] .bottom-nav {
+    box-shadow: 0 0 0 1px rgba(166, 203, 238, .18), 0 10px 28px rgba(0, 0, 0, .5);
+}
+
+/* ══ v6.1 fixes ═══════════════════════════════════════════════════════════════ */
+
+/* 1 · breathing room between the wavy line and the first element of every tab */
+.view {
+    padding-top: 16px;
+}
+
+/* 2 · card colour follows the habit's / block's own colour (soft tint of it) */
+.habit-card {
+    --st: color-mix(in srgb, var(--hc, #5b84b1) 26%, #ffffff);
+}
+
+.habit-card.done {
+    --st: color-mix(in srgb, var(--hc, #5b84b1) 42%, #ffffff);
+}
+
+.tl-item {
+    --st: color-mix(in srgb, var(--tc, #5b84b1) 26%, #ffffff);
+}
+
+.tl-item.done {
+    --st: color-mix(in srgb, var(--tc, #5b84b1) 42%, #ffffff);
+}
+
+.tl-item.now {
+    --st: color-mix(in srgb, var(--tc, #5b84b1) 52%, #ffffff);
+}
+
+/* 3 · one standard icon colour everywhere (colour lives on the card, not the glyph) */
+.habit-card .habit-icon,
+.tl-card .habit-icon {
+    color: #fffbe6 !important;
+}
+
+
+/* ══ v6.2 ═════════════════════════════════════════════════════════════════════ */
+
+/* week strip back to the original pill-card look, in theme colours */
+.day-pill.today {
+    background: var(--card2);
+}
+
+.day-pill.today .dp-num {
+    background: var(--primary);
+    color: var(--on-primary);
+}
+
+.day-pill.has-dot .dp-dot {
+    background: var(--primary);
+}
+
+/* nav: softer slate in light mode, evenly spaced items */
+:root[data-theme="light"] {
+    --nav-bg: #4a6a8a;
+}
+
+.nav-item {
+    color: rgba(255, 248, 220, .75);
+}
+
+.bottom-nav {
+    justify-content: space-between;
+    padding: 8px 8px;
+}
+
+.nav-item {
+    flex: 1 1 0;
+    max-width: none;
+    min-width: 0;
+}
+
+.nav-lbl {
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* attendance entries: tinted by their own colour, like habit cards */
+.att-card {
+    background: color-mix(in srgb, var(--hc, #5b84b1) 26%, #ffffff);
+    color: var(--ink);
+    border-color: transparent;
+}
+
+.att-card .att-name {
+    color: var(--ink);
+}
+
+.att-card .att-count,
+.att-card .att-tip {
+    color: rgba(29, 43, 58, .68);
+}
+
+.att-card.low .att-tip {
+    color: #a3382f;
+}
+
+.att-card .habit-icon.att-ico {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--ink) !important;
+    color: #fffbe6 !important;
+}
+
+.att-card .habit-menu-btn {
+    color: rgba(29, 43, 58, .7);
+}
+
+.att-card .att-badge.ok {
+    background: rgba(255, 255, 255, .6);
+    color: #1f6b45;
+}
+
+.att-card .att-badge.bad {
+    background: rgba(255, 255, 255, .6);
+    color: #a3382f;
+}
+
+.att-card .att-badge.na {
+    background: rgba(255, 255, 255, .5);
+    color: rgba(29, 43, 58, .6);
+}
+
+.att-card .att-bar {
+    background: rgba(29, 43, 58, .14);
+}
+
+.att-card .att-fill {
+    background: #3d8a5f;
+}
+
+.att-card.low .att-fill {
+    background: #b3473f;
+}
+
+.att-card .att-btn.present {
+    background: rgba(255, 255, 255, .6);
+    color: #1f6b45;
+}
+
+.att-card .att-btn.absent {
+    background: rgba(255, 255, 255, .6);
+    color: #a3382f;
+}
+
+.att-card .att-undo {
+    background: rgba(255, 255, 255, .55);
+    color: var(--ink);
 }
