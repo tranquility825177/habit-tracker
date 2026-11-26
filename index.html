@@ -10,7 +10,7 @@
   <link rel="manifest" href="manifest.json">
 
   <!-- Theme & status bar -->
-  <meta name="theme-color" content="#1a1a24">
+  <meta name="theme-color" content="#fefbe8">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="Habit Tracker">
 
@@ -26,8 +26,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="icon-192.png">
 
   <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
@@ -39,7 +41,7 @@
         if (pref !== 'light' && pref !== 'dark' && pref !== 'system') pref = 'system';
         var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.setAttribute('data-theme', pref === 'system' ? (dark ? 'dark' : 'light') : pref);
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
     })();
   </script>
 </head>
@@ -62,6 +64,7 @@
   <!-- ═══ HABITS VIEW ═══ -->
   <main class="view active" id="view-habits">
 
+
     <!-- TODAY BANNER -->
     <div class="today-banner" id="todayBanner">
       <div class="tb-left">
@@ -73,6 +76,7 @@
       </div>
       <div class="tb-pct" id="tbPct">0%</div>
     </div>
+
 
     <!-- WEEK STRIP -->
     <div class="week-wrap">
