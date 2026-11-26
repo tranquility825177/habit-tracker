@@ -24,18 +24,20 @@ function habitIconHTML(v) { const k = iconKey(v); return k ? ic(k) : esc(v || ''
 
 // ── CONSTANTS ──────────────────────────────────────────────────────────────────
 const EMOJIS = ['favorite', 'directions_run', 'menu_book', 'water_drop', 'self_improvement', 'draw', 'piano', 'restaurant', 'fitness_center', 'grass', 'palette', 'cleaning_services', 'medication', 'wb_sunny', 'ads_click', 'bedtime', 'psychology', 'directions_bike', 'headphones', 'sports_gymnastics'];   // Material icon names
-const COLORS = ['#f43f5e', '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16', '#22c55e', '#14b8a6', '#06b6d4', '#3b82f6', '#6366f1', '#a855f7', '#8b5cf6', '#ec4899'];
-const CNAMES = ['Rose', 'Red', 'Orange', 'Amber', 'Yellow', 'Lime', 'Green', 'Teal', 'Cyan', 'Blue', 'Indigo', 'Purple', 'Violet', 'Pink'];
+const COLORS = ['#5b84b1', '#6aa6d6', '#4fa3a5', '#6fae8a', '#a3b86a', '#d6b04c', '#e0975a', '#d9776a', '#c9738f', '#a07cc0', '#7f86c8', '#8c7a6b'];
+const CNAMES = ['Slate', 'Sky', 'Teal', 'Sage', 'Moss', 'Butter', 'Peach', 'Coral', 'Rose', 'Lilac', 'Periwinkle', 'Mocha'];
 const DAY_S = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MON_S = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 // ── STATE ──────────────────────────────────────────────────────────────────────
 let habits = JSON.parse(localStorage.getItem('ht3_habits') || '[]');
+const LEGACY_COLORS = {"#f43f5e": "#c9738f", "#ef4444": "#d9776a", "#f97316": "#e0975a", "#f59e0b": "#d6b04c", "#eab308": "#d6b04c", "#84cc16": "#a3b86a", "#22c55e": "#6fae8a", "#14b8a6": "#4fa3a5", "#06b6d4": "#6aa6d6", "#3b82f6": "#5b84b1", "#6366f1": "#7f86c8", "#a855f7": "#a07cc0", "#8b5cf6": "#a07cc0", "#ec4899": "#c9738f"};
+habits.forEach(h => { if (h && h.color && LEGACY_COLORS[h.color.toLowerCase()]) h.color = LEGACY_COLORS[h.color.toLowerCase()]; });
 let editId = null;
 let deleteId = null;
 let openMenuId = null;
 let selEmoji = 'favorite';
-let selColor = '#f43f5e';
+let selColor = COLORS[0];
 
 // drag state
 let dragSrcIdx = null;
@@ -89,7 +91,7 @@ function updateBanner() {
   const total = habits.length;
   const done = habits.filter(h => h.log?.[todayStr]).length;
   const pct = total ? Math.round(done / total * 100) : 0;
-  const accent = habits.find(h => h.color)?.color || '#a855f7';
+  const accent = habits.find(h => h.color)?.color || '#a07cc0';
 
   document.getElementById('tbCount').innerHTML = `${done} <span>/ ${total} habit${total !== 1 ? 's' : ''}</span>`;
   document.getElementById('tbBar').style.width = `${pct}%`;
@@ -103,7 +105,7 @@ function updateBanner() {
 function renderWeek() {
   const el = document.getElementById('weekStrip');
   el.innerHTML = '';
-  const accent = habits.find(h => h.color)?.color || '#a855f7';
+  const accent = habits.find(h => h.color)?.color || '#a07cc0';
   document.documentElement.style.setProperty('--t-accent', accent);
   document.documentElement.style.setProperty('--t-accent-bg', hexA(accent, .12));
 
@@ -160,7 +162,7 @@ function buildTracker(habit) {
   const CELL = 11;
   const GAP = 3;
   const STRIDE = CELL + GAP;
-  const color = habit.color || '#a855f7';
+  const color = habit.color || '#a07cc0';
 
   const todayDow = today.getDay();
   const thisMonday = new Date(today); thisMonday.setDate(today.getDate() - ((todayDow + 6) % 7));
@@ -334,7 +336,7 @@ function toggleDay(habitId, ds, cellEl, color) {
 
 function updateStatsBoxes(habit, container) {
   const { monthDone, monthTotal, pct, streak, best } = getStats(habit);
-  const color = habit.color || '#a855f7';
+  const color = habit.color || '#a07cc0';
   const boxes = container.querySelectorAll('.stat-box');
   if (boxes[0]) {
     boxes[0].querySelector('.stat-val').textContent = `${monthDone}/${monthTotal}`;
@@ -342,6 +344,8 @@ function updateStatsBoxes(habit, container) {
   }
   if (boxes[1]) boxes[1].querySelector('.stat-val').textContent = `${pct}%`;
   if (boxes[2]) boxes[2].querySelector('.stat-val').textContent = best;
+  const hp = container.closest('.habit-card')?.querySelector('.hc-prog');
+  if (hp) { hp.querySelector('u').style.width = `${pct}%`; hp.querySelector('b').textContent = `${pct}%`; }
 }
 
 // ── RENDER HABITS ─────────────────────────────────────────────────────────────
@@ -357,12 +361,13 @@ function renderHabits() {
   habits.forEach((habit, idx) => {
     const done = !!(habit.log?.[todayStr]);
     const { monthDone, monthTotal, pct, streak, best } = getStats(habit);
-    const color = habit.color || '#a855f7';
+    const color = habit.color || '#a07cc0';
 
     const card = document.createElement('div');
     card.className = 'habit-card' + (done ? ' done' : '');
     card.dataset.id = habit.id;
     card.dataset.idx = idx;
+    card.style.setProperty('--hc', color);   // card tint follows the habit's own colour
 
     // ── DRAG & DROP (gap #3) ──────────────────────────────────────────────────
     card.setAttribute('draggable', 'true');
@@ -473,6 +478,13 @@ function renderHabits() {
     sr.appendChild(makeBox(`${pct}%`, 'Completion'));
     sr.appendChild(makeBox(best, 'Best streak'));
 
+    // Status tab (label comes from CSS: "To do" / "Completed") + month progress
+    const tab = document.createElement('span'); tab.className = 'hc-tab'; tab.setAttribute('aria-hidden', 'true');
+    const prog = document.createElement('div'); prog.className = 'hc-prog';
+    prog.innerHTML = `<i><u style="width:${pct}%"></u></i><b>${pct}%</b>`;
+
+    card.appendChild(tab);
+    card.appendChild(prog);
     card.appendChild(head);
     card.appendChild(tw);
     card.appendChild(sr);
@@ -525,7 +537,7 @@ function openModal(title) {
 }
 function closeModal() {
   overlay.classList.remove('open');
-  habitInput.value = ''; editId = null; selEmoji = 'favorite'; selColor = '#f43f5e';
+  habitInput.value = ''; editId = null; selEmoji = 'favorite'; selColor = COLORS[0];
 }
 
 document.getElementById('addBtn').addEventListener('click', () => { editId = null; openModal('New Habit'); });
@@ -547,7 +559,7 @@ habitInput.addEventListener('keydown', e => { if (e.key === 'Enter') document.ge
 
 function doEdit(id) {
   const h = habits.find(h => h.id === id); if (!h) return;
-  editId = id; habitInput.value = h.name; selEmoji = iconKey(h.emoji) || 'favorite'; selColor = h.color || '#f43f5e';
+  editId = id; habitInput.value = h.name; selEmoji = iconKey(h.emoji) || 'favorite'; selColor = h.color || COLORS[0];
   openModal('Edit Habit');
 }
 // ── CONFIRM DIALOG (generic) ──────────────────────────────────────────────────
@@ -661,16 +673,16 @@ function popMenu(btn, items) {
 
 // ══ TIMETABLES (Routine + Weekend Planner share one engine) ═══════════════════
 const SLOT_TYPES = {
-  class: { l: 'Class', e: 'school', c: '#3b82f6' },
-  study: { l: 'Study', e: 'menu_book', c: '#6366f1' },
-  deep: { l: 'Deep work', e: 'psychology', c: '#a855f7' },
-  skill: { l: 'Skill', e: 'build', c: '#06b6d4' },
-  project: { l: 'Project', e: 'rocket_launch', c: '#ec4899' },
-  workout: { l: 'Workout', e: 'fitness_center', c: '#f97316' },
-  meal: { l: 'Meal', e: 'restaurant', c: '#22c55e' },
-  break: { l: 'Break', e: 'coffee', c: '#14b8a6' },
-  rest: { l: 'Wind down', e: 'dark_mode', c: '#8b5cf6' },
-  other: { l: 'Other', e: 'star', c: '#f59e0b' }
+  class: { l: 'Class', e: 'school', c: '#5b84b1' },
+  study: { l: 'Study', e: 'menu_book', c: '#7f86c8' },
+  deep: { l: 'Deep work', e: 'psychology', c: '#a07cc0' },
+  skill: { l: 'Skill', e: 'build', c: '#6aa6d6' },
+  project: { l: 'Project', e: 'rocket_launch', c: '#c9738f' },
+  workout: { l: 'Workout', e: 'fitness_center', c: '#e0975a' },
+  meal: { l: 'Meal', e: 'restaurant', c: '#6fae8a' },
+  break: { l: 'Break', e: 'coffee', c: '#4fa3a5' },
+  rest: { l: 'Wind down', e: 'dark_mode', c: '#a07cc0' },
+  other: { l: 'Other', e: 'star', c: '#d6b04c' }
 };
 const toMin = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
 const minToT = m => `${p(Math.floor(m / 60))}:${p(m % 60)}`;
@@ -729,10 +741,13 @@ function makeTimetable(cfg) {
       const t = SLOT_TYPES[s.type] || SLOT_TYPES.other;
       const isDone = !!(s.log && s.log[todayStr]);
       const isNow = cfg.canCheck() && nowMin >= toMin(s.start) && nowMin < toMin(s.end);
+      const bp = isDone ? 100 : isNow ? Math.round((nowMin - toMin(s.start)) / Math.max(1, toMin(s.end) - toMin(s.start)) * 100) : 0;
       return `<div class="tl-item${isDone ? ' done' : ''}${isNow ? ' now' : ''}" data-id="${s.id}" style="--tc:${t.c}">
         <div class="tl-time"><b>${fmtTime(s.start)}</b><span>${fmtTime(s.end)}</span></div>
         <div class="tl-rail"><i class="tl-dot"></i></div>
         <div class="tl-card">
+          <span class="hc-tab" aria-hidden="true"></span>
+          <div class="hc-prog"><i><u style="width:${bp}%"></u></i><b>${bp}%</b></div>
           <div class="habit-icon tl-ico" style="background:${hexA(t.c, .22)};color:${t.c}">${ic(t.e)}</div>
           <div class="tl-mid">
             <div class="tl-name">${esc(s.title)}</div>
@@ -949,7 +964,7 @@ function renderAttendance() {
   const cards = att.subjects.map(s => {
     const has = s.t > 0, ok = attOk(s.a, s.t, T), v = has ? s.a / s.t * 100 : 0;
     const col = COLORS[[...s.name].reduce((h, c) => h + c.charCodeAt(0), 0) % COLORS.length];
-    return `<div class="att-card${has && !ok ? ' low' : ''}${s.id === attJustAdded ? ' enter' : ''}" data-id="${s.id}">
+    return `<div class="att-card${has && !ok ? ' low' : ''}${s.id === attJustAdded ? ' enter' : ''}" data-id="${s.id}" style="--hc:${col}">
       <div class="att-top">
         <div class="habit-icon att-ico" style="background:${hexA(col, .22)};color:${col}">${esc(s.name.trim().charAt(0).toUpperCase())}</div>
         <div class="att-mid"><div class="att-name">${esc(s.name)}</div><div class="att-count">${s.a} / ${s.t} classes attended</div></div>
@@ -1693,14 +1708,14 @@ function playCompletionBeep() {
 
 // ── Exercise Categories & Weekdays ─────────────────────────────────────────────
 const EX_CATEGORIES = {
-  chest: { l: 'Chest', e: 'fitness_center', c: '#f97316' },
-  back: { l: 'Back', e: 'fitness_center', c: '#3b82f6' },
-  legs: { l: 'Legs', e: 'directions_run', c: '#22c55e' },
-  shoulders: { l: 'Shoulders', e: 'fitness_center', c: '#a855f7' },
-  arms: { l: 'Arms', e: 'fitness_center', c: '#ec4899' },
-  core: { l: 'Core', e: 'self_improvement', c: '#06b6d4' },
-  cardio: { l: 'Cardio', e: 'directions_bike', c: '#ef4444' },
-  recovery: { l: 'Mobility / Rest', e: 'grass', c: '#14b8a6' }
+  chest: { l: 'Chest', e: 'fitness_center', c: '#e0975a' },
+  back: { l: 'Back', e: 'fitness_center', c: '#5b84b1' },
+  legs: { l: 'Legs', e: 'directions_run', c: '#6fae8a' },
+  shoulders: { l: 'Shoulders', e: 'fitness_center', c: '#a07cc0' },
+  arms: { l: 'Arms', e: 'fitness_center', c: '#c9738f' },
+  core: { l: 'Core', e: 'self_improvement', c: '#6aa6d6' },
+  cardio: { l: 'Cardio', e: 'directions_bike', c: '#d9776a' },
+  recovery: { l: 'Mobility / Rest', e: 'grass', c: '#4fa3a5' }
 };
 
 const WEEK_DAYS = [
@@ -1722,71 +1737,43 @@ const DEFAULT_WORKOUT_DATA = {
     mon: {
       focus: 'Chest & Triceps',
       exercises: [
-        { id: 'ex_m1', name: 'Standard Push-ups', sets: 3, duration: 40, reps: '12-15 reps', rest: 20, category: 'chest' },
-        { id: 'ex_m2', name: 'Incline / Elevated Push-ups', sets: 3, duration: 40, reps: '10-12 reps', rest: 20, category: 'chest' },
-        { id: 'ex_m3', name: 'Chair Dips / Tricep Dips', sets: 3, duration: 40, reps: '12 reps', rest: 20, category: 'arms' },
-        { id: 'ex_m4', name: 'Dumbbell / Floor Press', sets: 3, duration: 40, reps: '12 reps', rest: 20, category: 'chest' },
-        { id: 'ex_m5', name: 'Plank to Push-up', sets: 3, duration: 40, reps: '10 reps', rest: 20, category: 'core' }
+        { id: 'ex_m1', name: 'Standard Push-ups', sets: 3, duration: 40, reps: '12-15 reps', rest: 20, category: 'chest' }
       ]
     },
     tue: {
       focus: 'Back & Biceps',
       exercises: [
-        { id: 'ex_t1', name: 'Pull-ups / Inverted Rows', sets: 3, duration: 40, reps: '8-10 reps', rest: 20, category: 'back' },
-        { id: 'ex_t2', name: 'Dumbbell Bent-over Rows', sets: 3, duration: 40, reps: '12 reps', rest: 20, category: 'back' },
-        { id: 'ex_t3', name: 'Bicep Curls', sets: 3, duration: 40, reps: '12-15 reps', rest: 20, category: 'arms' },
-        { id: 'ex_t4', name: 'Hammer Curls', sets: 3, duration: 40, reps: '12 reps', rest: 20, category: 'arms' },
-        { id: 'ex_t5', name: 'Superman Hold', sets: 3, duration: 40, reps: 'Hold 40s', rest: 20, category: 'back' }
+        { id: 'ex_t1', name: 'Pull-ups / Inverted Rows', sets: 3, duration: 40, reps: '8-10 reps', rest: 20, category: 'back' }
       ]
     },
     wed: {
       focus: 'Legs & Calves',
       exercises: [
-        { id: 'ex_w1', name: 'Bodyweight Squats', sets: 3, duration: 40, reps: '15-20 reps', rest: 20, category: 'legs' },
-        { id: 'ex_w2', name: 'Walking Lunges', sets: 3, duration: 40, reps: '12 each side', rest: 20, category: 'legs' },
-        { id: 'ex_w3', name: 'Glute Bridges', sets: 3, duration: 40, reps: '15 reps', rest: 20, category: 'legs' },
-        { id: 'ex_w4', name: 'Wall Sit Hold', sets: 3, duration: 40, reps: 'Hold 40s', rest: 20, category: 'legs' },
-        { id: 'ex_w5', name: 'Calf Raises', sets: 3, duration: 40, reps: '20 reps', rest: 20, category: 'legs' }
+        { id: 'ex_w1', name: 'Bodyweight Squats', sets: 3, duration: 40, reps: '15-20 reps', rest: 20, category: 'legs' }
       ]
     },
     thu: {
       focus: 'Shoulders & Core',
       exercises: [
-        { id: 'ex_th1', name: 'Pike Push-ups / Overhead Press', sets: 3, duration: 40, reps: '10-12 reps', rest: 20, category: 'shoulders' },
-        { id: 'ex_th2', name: 'Lateral Raises', sets: 3, duration: 40, reps: '12-15 reps', rest: 20, category: 'shoulders' },
-        { id: 'ex_th3', name: 'Russian Twists', sets: 3, duration: 40, reps: '20 reps', rest: 20, category: 'core' },
-        { id: 'ex_th4', name: 'Mountain Climbers', sets: 3, duration: 40, reps: 'Fast pace', rest: 20, category: 'core' },
-        { id: 'ex_th5', name: 'Forearm Plank', sets: 3, duration: 40, reps: 'Hold 40s', rest: 20, category: 'core' }
+        { id: 'ex_th1', name: 'Pike Push-ups / Overhead Press', sets: 3, duration: 40, reps: '10-12 reps', rest: 20, category: 'shoulders' }
       ]
     },
     fri: {
       focus: 'Full Body HIIT',
       exercises: [
-        { id: 'ex_f1', name: 'Jumping Jacks', sets: 3, duration: 40, reps: 'Fast pace', rest: 20, category: 'cardio' },
-        { id: 'ex_f2', name: 'Burpees', sets: 3, duration: 40, reps: '10-12 reps', rest: 20, category: 'cardio' },
-        { id: 'ex_f3', name: 'High Knees', sets: 3, duration: 40, reps: '30s sprint', rest: 20, category: 'cardio' },
-        { id: 'ex_f4', name: 'Jump Squats', sets: 3, duration: 40, reps: '12 reps', rest: 20, category: 'legs' },
-        { id: 'ex_f5', name: 'Bicycle Crunches', sets: 3, duration: 40, reps: '20 reps', rest: 20, category: 'core' }
+        { id: 'ex_f1', name: 'Jumping Jacks', sets: 3, duration: 40, reps: 'Fast pace', rest: 20, category: 'cardio' }
       ]
     },
     sat: {
       focus: 'Mobility & Recovery',
       exercises: [
-        { id: 'ex_s1', name: 'Dynamic Arm & Leg Swings', sets: 3, duration: 40, reps: 'Smooth', rest: 15, category: 'recovery' },
-        { id: 'ex_s2', name: 'Cat-Cow & Child’s Pose', sets: 3, duration: 40, reps: 'Deep breath', rest: 15, category: 'recovery' },
-        { id: 'ex_s3', name: 'Downward Dog to Cobra', sets: 3, duration: 40, reps: 'Gentle flow', rest: 15, category: 'recovery' },
-        { id: 'ex_s4', name: 'Hamstring & Hip Openers', sets: 3, duration: 40, reps: 'Hold stretch', rest: 15, category: 'recovery' },
-        { id: 'ex_s5', name: 'Deep Breathing & Relaxation', sets: 3, duration: 40, reps: 'Mindful', rest: 15, category: 'recovery' }
+        { id: 'ex_s1', name: 'Dynamic Arm & Leg Swings', sets: 3, duration: 40, reps: 'Smooth', rest: 15, category: 'recovery' }
       ]
     },
     sun: {
       focus: 'Rest & Core Tune-up',
       exercises: [
-        { id: 'ex_su1', name: 'Bird Dog', sets: 3, duration: 40, reps: '10 each side', rest: 20, category: 'core' },
-        { id: 'ex_su2', name: 'Dead Bug', sets: 3, duration: 40, reps: '12 reps', rest: 20, category: 'core' },
-        { id: 'ex_su3', name: 'Side Plank (Left)', sets: 3, duration: 40, reps: 'Hold 40s', rest: 20, category: 'core' },
-        { id: 'ex_su4', name: 'Side Plank (Right)', sets: 3, duration: 40, reps: 'Hold 40s', rest: 20, category: 'core' },
-        { id: 'ex_su5', name: 'Light Walk / Stretch', sets: 1, duration: 40, reps: 'Relax', rest: 20, category: 'recovery' }
+        { id: 'ex_su1', name: 'Bird Dog', sets: 3, duration: 40, reps: '10 each side', rest: 20, category: 'core' }
       ]
     }
   },
@@ -1821,6 +1808,8 @@ function cleanWorkoutData(raw) {
 let workoutData = cleanWorkoutData(load('ht5_workout', null));
 const saveWorkout = () => store('ht5_workout', workoutData);
 let selectedWorkoutDay = getTodayDayKey();
+// Routine list open/closed (remembered between visits)
+let exListOpen = (() => { try { return localStorage.getItem('ht_ex_list_open') !== '0'; } catch (e) { return true; } })();
 
 // ── Workout Timer & Stopwatch State ────────────────────────────────────────────
 let workoutTimer = {
@@ -2777,6 +2766,7 @@ function renderWorkout() {
   `;
 
   // 4. Exercise List
+  const doneEx = exercises.filter(x => isExerciseDone(x.id)).length;
   const exercisesHTML = exercises.map(ex => {
     const cat = EX_CATEGORIES[ex.category] || EX_CATEGORIES.chest;
     const isDone = isExerciseDone(ex.id);
@@ -2800,23 +2790,15 @@ function renderWorkout() {
               ${ex.sets} sets × ${ex.duration}s · ${ex.rest || 20}s rest${ex.reps ? ` · ${esc(ex.reps)}` : ''}
             </div>
           </div>
-          <div class="ex-right-actions">
-            <button type="button" class="ex-timer-launch" data-act="load-timer" data-id="${ex.id}" title="Load in Timer">${ic('play_arrow')}</button>
-            <div class="habit-check-btn ex-chk${isDone ? ' checked' : ''}" data-act="toggle-ex" data-id="${ex.id}" role="button" aria-label="Mark exercise complete">${CHECK_SVG}</div>
-            <div class="habit-menu-btn" data-act="ex-menu" data-id="${ex.id}" role="button" aria-label="More">${ic('more_horiz')}</div>
-          </div>
+          <div class="habit-menu-btn ex-menu-btn" data-act="ex-menu" data-id="${ex.id}" role="button" aria-label="More">${ic('more_horiz')}</div>
         </div>
         <div class="ex-sets-tracker">
-          <div class="ex-sets-ctrl">
-            <span class="ex-sets-lbl">Sets:</span>
-            <div class="ex-stepper">
-              <button type="button" class="ex-step-btn" data-act="step-sets" data-step="-1" data-id="${ex.id}" title="Decrease sets">−</button>
-              <span class="ex-step-val">${ex.sets}</span>
-              <button type="button" class="ex-step-btn" data-act="step-sets" data-step="1" data-id="${ex.id}" title="Increase sets">+</button>
-            </div>
-          </div>
           <div class="ex-bubbles-row">
             ${setBubbles}
+          </div>
+          <div class="ex-right-actions">
+            <button type="button" class="ex-timer-launch" data-act="load-timer" data-id="${ex.id}" title="Load in Timer" aria-label="Load in Timer">${ic('play_arrow')}</button>
+            <div class="habit-check-btn ex-chk${isDone ? ' checked' : ''}" data-act="toggle-ex" data-id="${ex.id}" role="button" aria-label="Mark exercise complete">${CHECK_SVG}</div>
           </div>
         </div>
       </div>
@@ -2828,16 +2810,19 @@ function renderWorkout() {
       ${dayStripHTML}
       ${bannerHTML}
       ${timerCardHTML}
-      <div class="ex-header-row">
-        <div class="ex-sec-title">Today's Routine (${totalEx})</div>
-        <div class="ex-top-actions">
-          <button type="button" class="ex-pill-btn" data-act="templates">${ic('auto_awesome')} Presets</button>
+      <button type="button" class="ex-collapse-head" data-act="toggle-exlist" aria-expanded="${exListOpen}">
+        <span class="ex-sec-title">Today's Routine</span>
+        <span class="ex-count-chip">${doneEx}/${totalEx} done</span>
+        <span class="ex-chev">${ic('expand_more', '20px')}</span>
+      </button>
+      ${exListOpen ? `
+        <div class="ex-actions-row">
           <button type="button" class="ex-pill-btn" data-act="add-ex">${ic('add')} Add Exercise</button>
         </div>
-      </div>
-      <div class="ex-list">
-        ${exercisesHTML || `<div class="empty"><div class="empty-icon">${ic('fitness_center')}</div><p>No exercises planned for this day yet.</p><button type="button" class="chip-btn" data-act="load-starter">Load Starter Plan</button></div>`}
-      </div>
+        <div class="ex-list">
+          ${exercisesHTML || `<div class="empty"><div class="empty-icon">${ic('fitness_center')}</div><p>No exercises planned for this day yet.<br>Tap “Add Exercise” to get started.</p></div>`}
+        </div>
+      ` : ''}
     </div>
   `;
 }
@@ -2978,58 +2963,17 @@ document.getElementById('view-workout')?.addEventListener('click', e => {
   const id = actBtn.dataset.id || actBtn.closest('.ex-card')?.dataset.id;
 
   switch (act) {
-    case 'step-sets': {
-      const delta = parseInt(actBtn.dataset.step, 10);
-      adjustExerciseSets(id, delta);
+    case 'toggle-exlist':
+      exListOpen = !exListOpen;
+      try { localStorage.setItem('ht_ex_list_open', exListOpen ? '1' : '0'); } catch (e) { }
+      buzz(HAPTIC.tick);
+      renderWorkout();
       break;
-    }
     case 'edit-focus':
       openDfModal(selectedWorkoutDay);
       break;
     case 'add-ex':
       openExModal(selectedWorkoutDay, null);
-      break;
-    case 'load-starter':
-      workoutData.plans = JSON.parse(JSON.stringify(DEFAULT_WORKOUT_DATA.plans));
-      saveWorkout();
-      renderWorkout();
-      showToast('Starter workout plan loaded');
-      break;
-    case 'templates':
-      popMenu(actBtn, [
-        {
-          label: `${ic('fitness_center')}Push / Pull / Legs Split`,
-          fn: () => {
-            workoutData.plans = JSON.parse(JSON.stringify(DEFAULT_WORKOUT_DATA.plans));
-            saveWorkout(); renderWorkout(); showToast('Push / Pull / Legs split loaded');
-          }
-        },
-        {
-          label: `${ic('directions_run')}Full Body Circuit`,
-          fn: () => {
-            WEEK_DAYS.forEach(d => {
-              workoutData.plans[d.key] = {
-                focus: d.key === 'sat' || d.key === 'sun' ? 'Active Recovery' : 'Full Body Circuit',
-                exercises: [
-                  { id: uid(), name: 'Bodyweight Squats', sets: 3, duration: 40, reps: '15 reps', rest: 20, category: 'legs' },
-                  { id: uid(), name: 'Push-ups', sets: 3, duration: 40, reps: '12 reps', rest: 20, category: 'chest' },
-                  { id: uid(), name: 'Dumbbell Bent-over Rows', sets: 3, duration: 40, reps: '12 reps', rest: 20, category: 'back' },
-                  { id: uid(), name: 'Mountain Climbers', sets: 3, duration: 40, reps: 'Fast pace', rest: 20, category: 'cardio' },
-                  { id: uid(), name: 'Plank Hold', sets: 3, duration: 40, reps: 'Hold 40s', rest: 20, category: 'core' }
-                ]
-              };
-            });
-            saveWorkout(); renderWorkout(); showToast('Full Body template loaded');
-          }
-        },
-        {
-          label: `${ic('replay')}Reset Current Day to Default`,
-          fn: () => {
-            workoutData.plans[selectedWorkoutDay] = JSON.parse(JSON.stringify(DEFAULT_WORKOUT_DATA.plans[selectedWorkoutDay]));
-            saveWorkout(); renderWorkout(); showToast('Day reset to default');
-          }
-        }
-      ]);
       break;
     case 'load-timer': {
       const plan = workoutData.plans[selectedWorkoutDay];
@@ -3051,40 +2995,7 @@ document.getElementById('view-workout')?.addEventListener('click', e => {
       const ex = plan?.exercises?.find(x => x.id === id);
       popMenu(actBtn, [
         { label: `${ic('play_arrow')}Start in Timer`, fn: () => { if (ex) loadExerciseIntoTimer(ex, true); } },
-        {
-          label: `${ic('sync_alt')}Alternate with another...`,
-          fn: () => {
-            const otherEx = plan?.exercises?.find(x => x.id !== id);
-            setupAlternatingMode(id, otherEx ? otherEx.id : id);
-            renderWorkout();
-            document.getElementById('workoutTimerCard')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        },
         { label: `${ic('edit')}Edit Exercise`, fn: () => openExModal(selectedWorkoutDay, id) },
-        {
-          label: `${ic('chevron_left')}Move Up`, fn: () => {
-            if (!plan) return;
-            const idx = plan.exercises.findIndex(x => x.id === id);
-            if (idx > 0) {
-              const temp = plan.exercises[idx - 1];
-              plan.exercises[idx - 1] = plan.exercises[idx];
-              plan.exercises[idx] = temp;
-              saveWorkout(); renderWorkout();
-            }
-          }
-        },
-        {
-          label: `${ic('chevron_right')}Move Down`, fn: () => {
-            if (!plan) return;
-            const idx = plan.exercises.findIndex(x => x.id === id);
-            if (idx >= 0 && idx < plan.exercises.length - 1) {
-              const temp = plan.exercises[idx + 1];
-              plan.exercises[idx + 1] = plan.exercises[idx];
-              plan.exercises[idx] = temp;
-              saveWorkout(); renderWorkout();
-            }
-          }
-        },
         {
           label: `${ic('delete')}Delete`, danger: true, fn: () => askConfirm({
             title: 'Delete Exercise?',
@@ -3581,7 +3492,7 @@ function calGo(delta, dir) {
 function renderHabitCal(anim, soft) {
   if (CAL.mode === 'att') return renderAttCal(anim, soft);   // soft = a day was just toggled: no cascade, ring/numbers glide from the old values
   const h = calHabit(); if (!h) return;
-  const color = h.color || '#a855f7';
+  const color = h.color || '#a07cc0';
   const D = calMonthData(h, CAL.y, CAL.m);
   const st = getStats(h);
   const atNow = ymKey(CAL.y, CAL.m) === nowKey();
@@ -3852,7 +3763,7 @@ function attCalDay(act, ds) {
       if (CAL.mode === 'att') { CAL.sel = cell.dataset.ds; buzz(HAPTIC.tick); renderAttCal(undefined, true); return; }
       const h = calHabit(); if (!h) return;
       const ds = cell.dataset.ds, wasOn = !!h.log?.[ds];
-      toggleDay(h.id, ds, null, h.color || '#a855f7');                // updates the card behind, banner, week strip, saves
+      toggleDay(h.id, ds, null, h.color || '#a07cc0');                // updates the card behind, banner, week strip, saves
       const scroller = sheet.querySelector('.cal-scroll'), top = scroller ? scroller.scrollTop : 0;
       renderHabitCal(undefined, true);
       if (scroller) sheet.querySelector('.cal-scroll').scrollTop = top;
